@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* Your existing styles – unchanged, copy from your original file */
         :root {
             --cobalt-deep: #0b032d;
             --cobalt-mid:  #1a0a4a;
@@ -364,8 +365,6 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* -------- Price summary -------- */
-
         /* -------- Responsive -------- */
         @media (max-width: 640px) {
             .site-nav { padding: 0.5rem 1rem; }
@@ -401,44 +400,24 @@
 
     <!-- ================= HOME ================= -->
     <section id="homeSection">
-        <!-- Hero -->
+        <!-- Hero (unchanged) -->
         <div class="hero-wrap">
             <div class="hero-eyebrow" data-i18n="heroEyebrow">RMIT Hanoi Musical Theatre Club · Theat.R Production #3</div>
-
             <h1 class="hero-mega">La La Land</h1>
             <p class="hero-sub" data-i18n="heroSub">The Cost of the Dream</p>
             <p class="hero-tagline" data-i18n="heroTagline">An original musical about dreams, ambition, and the cost of chasing them — told through the songs you love, rewritten for one unforgettable night.</p>
 
             <div class="info-card">
-                <div class="info-col">
-                    <h4 data-i18n="dateLabel">Date</h4>
-                    <p class="big">30 May 2026</p>
-                    <span class="sub" data-i18n="dateSub">Saturday</span>
-                </div>
-                <div class="info-col">
-                    <h4 data-i18n="timeLabel">Time</h4>
-                    <p class="big">7:00 PM</p>
-                    <span class="sub" data-i18n="checkin">(check-in starts at 6PM)</span>
-                </div>
-                <div class="info-col">
-                    <h4 data-i18n="venueLabel">Venue</h4>
-                    <p class="big" style="font-size: clamp(.95rem, 1.5vw, 1.2rem)">Nhà văn hoá Q. Đống Đa</p>
-                    <span class="sub">22 Đặng Tiến Đông, Hà Nội</span>
-                </div>
+                <div class="info-col"><h4 data-i18n="dateLabel">Date</h4><p class="big">30 May 2026</p><span class="sub" data-i18n="dateSub">Saturday</span></div>
+                <div class="info-col"><h4 data-i18n="timeLabel">Time</h4><p class="big">7:00 PM</p><span class="sub" data-i18n="checkin">(check-in starts at 6PM)</span></div>
+                <div class="info-col"><h4 data-i18n="venueLabel">Venue</h4><p class="big" style="font-size: clamp(.95rem, 1.5vw, 1.2rem)">Nhà văn hoá Q. Đống Đa</p><span class="sub">22 Đặng Tiến Đông, Hà Nội</span></div>
             </div>
 
-            <!-- Tier swatches (inside hero, directly above CTA) -->
             <div class="hero-tiers">
                 <div class="tier-grid">
-                    <div class="tier-card stars-bg text-[color:var(--cobalt-deep)]">
-                        <div class="tier-name">The Stars</div>
-                    </div>
-                    <div class="tier-card artists-bg text-[color:var(--cobalt-deep)]">
-                        <div class="tier-name">The Artists</div>
-                    </div>
-                    <div class="tier-card dreamers-bg text-[#3a2a00]">
-                        <div class="tier-name">The Dreamers</div>
-                    </div>
+                    <div class="tier-card stars-bg text-[color:var(--cobalt-deep)]"><div class="tier-name">The Stars</div></div>
+                    <div class="tier-card artists-bg text-[color:var(--cobalt-deep)]"><div class="tier-name">The Artists</div></div>
+                    <div class="tier-card dreamers-bg text-[#3a2a00]"><div class="tier-name">The Dreamers</div></div>
                 </div>
                 <p class="text-xs text-[color:var(--gold)]/70 italic mt-3 text-center" data-i18n="vipNote">SEATMAP (note: VIP seats cannot be selected, only for guests)</p>
             </div>
@@ -471,11 +450,7 @@
                 <div id="seatContainer" class="map-shell mb-12 pb-4 panel p-4 md:p-6">
                     <div class="map-viewport" id="mapViewport">
                         <div id="floor1-map" class="flex flex-col gap-1"></div>
-
-                        <div class="floor-divider">
-                            <span data-i18n="floor2">tầng 2 / second floor</span>
-                        </div>
-
+                        <div class="floor-divider"><span data-i18n="floor2">tầng 2 / second floor</span></div>
                         <div id="floor2-map" class="flex flex-col gap-1"></div>
                     </div>
                 </div>
@@ -515,7 +490,6 @@
     <section id="registerSection" class="hidden max-w-2xl mx-auto px-6 py-12">
         <div class="panel p-6 sm:p-10">
             <h2 class="text-3xl font-display text-[color:var(--gold)] mb-8" data-i18n="regTitle">Complete your Registration</h2>
-
             <div class="mb-8">
                 <h3 class="text-xs uppercase tracking-widest text-[color:var(--gold)] mb-4" data-i18n="summaryTitle">Summary</h3>
                 <div class="bg-white/5 p-4 rounded-xl border border-white/10">
@@ -525,10 +499,7 @@
             </div>
 
             <form id="bookingForm" class="space-y-5" autocomplete="on" novalidate>
-                <div>
-                    <label class="block text-xs uppercase mb-2 text-[color:var(--gold)]" data-i18n="formName">Full Name</label>
-                    <input type="text" id="regName" required>
-                </div>
+                <div><label class="block text-xs uppercase mb-2 text-[color:var(--gold)]" data-i18n="formName">Full Name</label><input type="text" id="regName" required></div>
                 <div>
                     <label class="block text-xs uppercase mb-2 text-[color:var(--gold)]" data-i18n="formEmail">Email Address</label>
                     <input type="email" id="regEmail" required autocomplete="email" placeholder="you@example.com" inputmode="email">
@@ -539,14 +510,8 @@
                     <input type="tel" id="regPhone" required autocomplete="tel" placeholder="0xxxxxxxxx" inputmode="numeric" maxlength="10">
                     <p class="field-error hidden" id="regPhoneErr" data-i18n="phoneErr">Please enter a 10-digit phone number starting with 0.</p>
                 </div>
-                <div>
-                    <label class="block text-xs uppercase mb-2 text-[color:var(--gold)]" data-i18n="formSid">sID (RMIT Student/Staff ID)</label>
-                    <input type="text" id="regSID" placeholder="Optional">
-                </div>
-                <div>
-                    <label class="block text-xs uppercase mb-2 text-[color:var(--gold)]" data-i18n="refLabel">Referral Code (Optional)</label>
-                    <input type="text" id="regRef" placeholder="Optional">
-                </div>
+                <div><label class="block text-xs uppercase mb-2 text-[color:var(--gold)]" data-i18n="formSid">sID (RMIT Student/Staff ID)</label><input type="text" id="regSID" placeholder="Optional"></div>
+                <div><label class="block text-xs uppercase mb-2 text-[color:var(--gold)]" data-i18n="refLabel">Referral Code (Optional)</label><input type="text" id="regRef" placeholder="Optional"></div>
 
                 <div class="flex gap-4 pt-4">
                     <button type="button" class="pill flex-1 py-4" onclick="showSection('seats')" data-i18n="back">Back</button>
@@ -562,7 +527,6 @@
             <div class="w-20 h-20 bg-[color:var(--gold)] rounded-full flex items-center justify-center mx-auto mb-8 text-[color:var(--cobalt-deep)] text-4xl shadow-[0_0_40px_rgba(247,220,138,.4)]">✓</div>
             <h2 class="text-3xl sm:text-4xl font-display text-[color:var(--gold-bright)] mb-4" data-i18n="confTitle">Registration Confirmed!</h2>
             <p class="text-cream/70 leading-relaxed mb-10" data-i18n="confSub">Your seats have been reserved. Please check your email as soon as possible for further confirmation process and details.</p>
-
             <div class="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 text-left mb-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                     <div><h4 class="text-[10px] uppercase text-[color:var(--gold)] tracking-widest mb-1">DATE</h4><p class="font-bold">30 MAY 2026</p></div>
@@ -572,16 +536,14 @@
                     <div class="md:col-span-2"><h4 class="text-[10px] uppercase text-[color:var(--gold)] tracking-widest mb-1" data-i18n="confSeatsLbl">Seats</h4><p id="confSeats" class="font-bold">-</p></div>
                 </div>
             </div>
-
             <p class="text-xs text-cream/60 italic mb-8" data-i18n="confirmationHint">A confirmation email has been sent to your inbox with bank-transfer details. Please reply with your payment screenshot within 48 hours.</p>
-
             <button class="btn-primary w-full py-4 text-lg" onclick="resetAndGoHome()" data-i18n="backHome">Back to Home</button>
         </div>
     </section>
 
     <script>
     // =========================================================================
-    //  i18n
+    //  i18n (same as before)
     // =========================================================================
     const translations = {
         en: {
@@ -592,8 +554,6 @@
             dateLabel: "Date", dateSub: "Saturday",
             timeLabel: "Time",
             venueLabel: "Venue",
-            tierTitle: "Seating Tiers",
-            viewSeatmap: "View Seating Map",
             aboutTitle: "About Us",
             checkin: "(check-in starts at 6PM)",
             startReg: "Reserve Your Seats",
@@ -635,8 +595,6 @@
             dateLabel: "Ngày", dateSub: "Thứ Bảy",
             timeLabel: "Giờ",
             venueLabel: "Địa điểm",
-            tierTitle: "Hạng ghế",
-            viewSeatmap: "Xem sơ đồ ghế",
             aboutTitle: "Giới thiệu Ban tổ chức",
             checkin: "(check-in bắt đầu lúc 6PM)",
             startReg: "Đặt chỗ của bạn",
@@ -681,6 +639,17 @@
     let selectedSeats = [];   // [{ id, floor, row, num, tier }]
     let soldSeats = new Set();
 
+    // =========================================================================
+    //  STATIC BOOKED SEATS – extracted from your CSV
+    // =========================================================================
+    // All seat IDs that appear in theatre_data.csv (with any Booking_ID)
+    const BOOKED_SEAT_IDS = [
+        "F1-C-13","F1-C-14","F1-C-16","F1-C-15","F1-D-18","F1-D-19","F1-D-20","F1-D-21","F1-D-22","F1-D-23","F1-D-24","F1-E-14","F1-E-19","F1-E-20","F1-F-14","F1-F-15","F1-H-14","F1-D-13","F1-D-12","F1-D-11","F1-E-13","F1-E-12","F1-F-13","F1-F-12","F1-F-11","F1-G-13","F1-G-12","F1-G-11","F1-G-10","F1-G-9","F1-H-7","F1-H-8","F1-H-13","F1-H-12","F1-H-11","F2-A-14","F2-E-13","F2-E-12","F1-C-1","F1-C-2","F1-G-14","F1-G-15","F1-G-16","F1-G-17","F1-G-18","F1-J-13","F1-C-3","F1-C-4","F1-C-5","F1-C-6","F1-C-7","F1-C-8","F1-C-9","F1-C-10","F1-C-11","F1-C-12","F1-H-15","F1-H-16","F1-H-17","F1-D-14","F1-D-15","F1-D-16","F1-D-17","F1-E-11","F1-E-10","F1-E-9","F1-E-8","F1-E-7","F1-E-6","F1-C-18","F1-C-17","F1-E-5","F1-D-8","F1-D-9","F1-D-10","F1-F-18","F1-F-17","F1-F-19","F1-G-20","F1-G-21","F2-A-16","F2-A-17","F1-J-12","F1-J-11","F1-F-10","F1-F-9","F1-F-8","F1-J-15","F1-J-16","F1-J-17","F1-J-18","F1-J-19","F1-J-20","F1-J-21","F1-J-22","F1-G-7","F1-G-8","F1-G-22","F1-G-19","F1-J-14","F2-D-12","F2-D-11","F2-D-10","F1-D-7","F1-D-6","F1-D-5","F1-H-10","F1-H-9","F1-E-16","F1-E-17","F1-K-14","F1-K-13","F1-K-12","F1-K-11","F1-H-18","F1-H-19","F2-A-18","F2-A-19","F2-A-20","F1-G-6","F2-B-15","F1-G-5","F1-M-16","F1-M-15","F1-F-7","F1-F-6","F1-N-13","F1-N-12","F1-J-7","F1-J-6","F2-D-13","F2-D-14","F2-D-15","F2-D-16","F2-A-11","F1-M-14","F1-M-13","F1-M-12","F1-M-11","F1-M-9","F1-M-10","F2-A-10","F1-E-15","F1-J-10","F1-J-9","F1-K-10","F1-K-9","F1-J-23","F2-A-9","F1-C-20","F1-C-21","F2-D-9","F1-G-23","F1-G-24","F1-G-25","F1-H-6","F1-H-5","F1-H-4","F1-K-6","F1-K-5","F1-G-4","F1-G-3","F1-G-2","F1-L-12","F1-L-11","F1-F-22","F1-K-16","F1-K-20","F1-K-7","F1-K-8","F1-K-22","F1-K-21","F2-A-15","F1-H-21","F1-H-20","F1-K-18","F1-K-17","F2-A-12","F1-L-13","F1-L-14","F2-D-17","F1-J-8","F1-C-19","F2-D-8","F1-E-21","F2-A-21","F1-L-18","F2-E-15","F2-E-14","F2-E-16","F2-E-17","F1-J-5","F2-E-10","F2-E-9","F2-E-8","F2-D-7","F1-E-22","F1-E-23","F1-K-24","F1-K-23","F1-L-7","F1-L-8","F1-L-9","F1-L-6","F1-L-21","F1-L-22","F1-L-23","F1-L-24","F1-L-25","F2-D-18","F2-D-19","F2-D-20","F1-H-1","F1-H-2","F2-E-7","F1-F-23","F1-H-22","F2-D-5","F2-D-6","F1-F-3","F1-F-2","F1-F-1","F1-N-11","F1-E-4","F1-E-24","F1-E-25","F2-E-20","F2-A-22","F1-K-4","F2-A-8","F2-A-7","F1-F-16","F1-M-18","F1-M-17","F2-D-2","F2-D-1","F2-D-21","F2-D-4","F2-B-16","F2-B-17","F1-N-21","F1-N-20","F1-N-19","F1-N-18","F1-N-17","F2-E-18","F2-E-19","F1-J-4","F1-L-20","F1-L-19","F1-H-23","F1-H-24","F1-N-10","F1-F-25","F1-L-26","F1-D-1","F1-D-2","F1-M-8","F1-M-7","F1-M-6","F2-E-6","F2-E-5","F2-E-4","F2-D-23","F2-D-22","F1-F-20","F1-E-18","F2-A-13","F1-N-14","F1-L-15","F1-D-3","F1-K-15","F1-C-22","F1-J-24","F1-L-17","F1-L-16","F1-J-25"
+    ];
+
+    // Populate soldSeats from the static list
+    BOOKED_SEAT_IDS.forEach(id => soldSeats.add(id));
+
     function setLang(lang) {
         currentLang = lang;
         document.getElementById('btnEN').classList.toggle('active', lang === 'en');
@@ -692,9 +661,6 @@
         document.getElementById('aboutContent').innerHTML = about[lang].split('\n\n').map(p => `<p>${p}</p>`).join('');
     }
 
-    // =========================================================================
-    //  Toast
-    // =========================================================================
     function toast(msg, type = '') {
         const wrap = document.getElementById('toastWrap');
         const el = document.createElement('div');
@@ -704,18 +670,12 @@
         setTimeout(() => { el.style.opacity = '0'; el.style.transform = 'translateY(-8px)'; setTimeout(() => el.remove(), 300); }, 4200);
     }
 
-    // =========================================================================
-    //  Navigation
-    // =========================================================================
     function showSection(id) {
         ['homeSection', 'seatsSection', 'registerSection', 'confirmationSection'].forEach(s => {
             document.getElementById(s).classList.add('hidden');
         });
         document.getElementById(id + 'Section').classList.remove('hidden');
         window.scrollTo(0, 0);
-
-        if (id === 'seats') refreshSoldSeats();
-
         if (id === 'register') {
             document.getElementById('regSummary').innerHTML = selectedSeats.length
                 ? selectedSeats.map(s => `<div class="flex justify-between items-center border-b border-white/10 py-1.5">
@@ -725,6 +685,7 @@
                 : '<div class="text-white/40">No seats selected</div>';
         }
     }
+
     function resetAndGoHome() {
         selectedSeats = [];
         document.querySelectorAll('.seat.selected').forEach(s => s.classList.remove('selected'));
@@ -736,12 +697,8 @@
     }
 
     // =========================================================================
-    //  Seat map
+    //  Seat map definition (same as before)
     // =========================================================================
-    // Seat-map spec derived from the reference image.
-    // Format: { row, floor, tier, left: { count, start }, right: { count, start } }
-    // left side numbers run high→low from outside in; right side runs high→low as well;
-    // start = outermost number on that side.
     const MAP_FLOOR_1 = [
         { row: 'A', tier: 'VIP',     left: { count: 12, start: 24 }, right: { count: 12, start: 12 } },
         { row: 'B', tier: 'VIP',     left: { count: 12, start: 24 }, right: { count: 12, start: 12 } },
@@ -774,11 +731,50 @@
         seat.className = `seat w-6 h-6 sm:w-7 sm:h-7 ${tier.toLowerCase()}-bg`;
         seat.dataset.id = id;
         seat.innerText = num;
-        if (isVip) seat.classList.add('vip', 'sold');
-        else {
-            seat.onclick = () => toggleSeat(seat, { id, floor, row, num, tier });
+        if (isVip) {
+            seat.classList.add('vip', 'sold');
+        } else {
+            if (soldSeats.has(id)) seat.classList.add('sold');
+            else seat.onclick = () => toggleSeat(seat, { id, floor, row, num, tier });
         }
         return seat;
+    }
+
+    function buildRow(spec, floor, container) {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'seat-row';
+        const l1 = document.createElement('div'); l1.className = 'rowlbl'; l1.innerText = spec.row;
+        rowDiv.appendChild(l1);
+        if (spec.single) {
+            const strip = document.createElement('div'); strip.className = 'flex gap-0.5';
+            for (let i = spec.single.start; i >= spec.single.start - spec.single.count + 1; i--) {
+                strip.appendChild(buildSeat(floor, spec.row, i, spec.tier));
+            }
+            rowDiv.appendChild(strip);
+        } else {
+            const left = document.createElement('div'); left.className = 'flex gap-0.5';
+            for (let i = spec.left.start; i > spec.left.start - spec.left.count; i--) {
+                left.appendChild(buildSeat(floor, spec.row, i, spec.tier));
+            }
+            rowDiv.appendChild(left);
+            const aisle = document.createElement('div'); aisle.className = 'aisle';
+            rowDiv.appendChild(aisle);
+            const right = document.createElement('div'); right.className = 'flex gap-0.5';
+            for (let i = spec.right.start; i >= spec.right.start - spec.right.count + 1; i--) {
+                right.appendChild(buildSeat(floor, spec.row, i, spec.tier));
+            }
+            rowDiv.appendChild(right);
+        }
+        rowDiv.appendChild(l1.cloneNode(true));
+        container.appendChild(rowDiv);
+    }
+
+    function buildMap() {
+        const f1 = document.getElementById('floor1-map');
+        const f2 = document.getElementById('floor2-map');
+        f1.innerHTML = ''; f2.innerHTML = '';
+        MAP_FLOOR_1.forEach(spec => buildRow(spec, 1, f1));
+        MAP_FLOOR_2.forEach(spec => buildRow(spec, 2, f2));
     }
 
     function toggleSeat(el, seat) {
@@ -798,114 +794,32 @@
         updateUI();
     }
 
-    function buildRow(spec, floor, container) {
-        const rowDiv = document.createElement('div');
-        rowDiv.className = 'seat-row';
-
-        const l1 = document.createElement('div'); l1.className = 'rowlbl'; l1.innerText = spec.row;
-        rowDiv.appendChild(l1);
-
-        if (spec.single) {
-            const strip = document.createElement('div'); strip.className = 'flex gap-0.5';
-            for (let i = spec.single.start; i >= spec.single.start - spec.single.count + 1; i--) {
-                strip.appendChild(buildSeat(floor, spec.row, i, spec.tier));
-            }
-            rowDiv.appendChild(strip);
-        } else {
-            const left = document.createElement('div'); left.className = 'flex gap-0.5';
-            for (let i = spec.left.start; i > spec.left.start - spec.left.count; i--) {
-                left.appendChild(buildSeat(floor, spec.row, i, spec.tier));
-            }
-            rowDiv.appendChild(left);
-
-            const aisle = document.createElement('div'); aisle.className = 'aisle';
-            rowDiv.appendChild(aisle);
-
-            const right = document.createElement('div'); right.className = 'flex gap-0.5';
-            for (let i = spec.right.start; i >= spec.right.start - spec.right.count + 1; i--) {
-                right.appendChild(buildSeat(floor, spec.row, i, spec.tier));
-            }
-            rowDiv.appendChild(right);
-        }
-
-        rowDiv.appendChild(l1.cloneNode(true));
-        container.appendChild(rowDiv);
-    }
-
-    function buildMap() {
-        const f1 = document.getElementById('floor1-map');
-        const f2 = document.getElementById('floor2-map');
-        f1.innerHTML = ''; f2.innerHTML = '';
-        MAP_FLOOR_1.forEach(spec => buildRow(spec, 1, f1));
-        MAP_FLOOR_2.forEach(spec => buildRow(spec, 2, f2));
-    }
-
-    function applySoldSeats() {
-        document.querySelectorAll('.seat').forEach(el => {
-            const id = el.dataset.id;
-            if (!id) return;
-            if (soldSeats.has(id) && !el.classList.contains('vip')) {
-                el.classList.add('sold');
-                el.classList.remove('selected');
-            }
-        });
-        // Remove selected seats that just became sold.
-        const before = selectedSeats.length;
-        selectedSeats = selectedSeats.filter(s => !soldSeats.has(s.id));
-        if (selectedSeats.length !== before) {
-            toast(currentLang === 'vi'
-                ? 'Một số ghế bạn chọn vừa được đặt. Vui lòng chọn lại.'
-                : 'Some seats you picked were just booked. Please pick again.', 'error');
-            updateUI();
-        }
-    }
-
-    async function refreshSoldSeats() {
-        try {
-            const res = await fetch('/api/seats', { cache: 'no-store' });
-            if (!res.ok) return;
-            const { sold } = await res.json();
-            soldSeats = new Set(sold);
-            applySoldSeats();
-        } catch (err) { /* offline — silently ignore */ }
-    }
-
     function updateUI() {
         const list = document.getElementById('selection-list');
         const countDisplay = document.getElementById('countDisplay');
         const btnContinue = document.getElementById('btnContinue');
-
         if (selectedSeats.length === 0) {
             list.innerHTML = `<p class="text-cream/40 italic">${translations[currentLang].noSeats}</p>`;
             countDisplay.innerText = '0';
             btnContinue.disabled = true;
             return;
         }
-
         list.innerHTML = selectedSeats.map(seat => `
             <div class="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/10">
                 <span class="font-bold">F${seat.floor} · ${seat.row}${seat.num}</span>
                 <span class="text-[10px] uppercase px-2 py-1 rounded-full ${seat.tier.toLowerCase()}-bg font-black">${seat.tier}</span>
             </div>
         `).join('');
-
         countDisplay.innerText = selectedSeats.length;
         btnContinue.disabled = false;
     }
 
     // =========================================================================
-    //  Form validation
+    //  Form & booking – static version (no backend)
     // =========================================================================
     const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    /** Keep only digits so users can paste "+84 987 654 321" etc.; truncate to 10. */
-    function sanitizePhone(raw) {
-        return (raw || '').replace(/\D/g, '').slice(0, 10);
-    }
-    /** Exactly 10 digits, starting with 0. */
-    function isValidPhone(value) {
-        return /^0\d{9}$/.test(value || '');
-    }
+    function sanitizePhone(raw) { return (raw || '').replace(/\D/g, '').slice(0, 10); }
+    function isValidPhone(value) { return /^0\d{9}$/.test(value || ''); }
     function showFieldError(inputId, errorId, show) {
         document.getElementById(inputId).classList.toggle('invalid', show);
         document.getElementById(errorId).classList.toggle('hidden', !show);
@@ -922,8 +836,6 @@
         showFieldError('regPhone', 'regPhoneErr', !ok);
         return ok;
     }
-
-    // Strip anything that isn't a digit, cap at 10 chars.
     document.getElementById('regPhone').addEventListener('input', (e) => {
         const cleaned = sanitizePhone(e.target.value);
         if (cleaned !== e.target.value) e.target.value = cleaned;
@@ -935,99 +847,24 @@
         if (e.target.classList.contains('invalid')) validateEmailField();
     });
 
-    // =========================================================================
-    //  Booking submission
-    // =========================================================================
     async function submitBooking(e) {
         e.preventDefault();
-        const name  = document.getElementById('regName').value.trim();
-        const email = document.getElementById('regEmail').value.trim();
-        const phone = document.getElementById('regPhone').value.trim();
-        const sid   = document.getElementById('regSID').value.trim();
-        const ref   = document.getElementById('regRef').value.trim();
-
-        // Required-field check first.
-        if (!name || !email || !phone) {
-            toast(currentLang === 'vi'
-                ? 'Vui lòng điền họ tên, email và số điện thoại.'
-                : 'Please fill in name, email, and phone.', 'error');
-            return;
-        }
-        // Field-level validation; reveal inline errors.
-        const emailOk = validateEmailField();
-        const phoneOk = validatePhoneField();
-        if (!(emailOk && phoneOk)) {
-            toast(translations[currentLang].formFixErrors, 'error');
-            (emailOk ? document.getElementById('regPhone') : document.getElementById('regEmail')).focus();
-            return;
-        }
-        if (selectedSeats.length === 0) { toast('No seats selected.', 'error'); showSection('seats'); return; }
-
-        const btn = document.getElementById('submitBtn');
-        const label = document.getElementById('submitLabel');
-        const originalLabel = label.textContent;
-        btn.disabled = true;
-        label.innerHTML = `<span class="spinner"></span>${currentLang === 'vi' ? 'Đang xử lý…' : 'Processing…'}`;
-
-        try {
-            const res = await fetch('/api/book', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name, email, phone, sid, referralCode: ref,
-                    seats: selectedSeats.map(s => s.id),
-                }),
-            });
-            const data = await res.json().catch(() => ({}));
-
-            if (res.status === 409) {
-                if (Array.isArray(data.conflicts)) {
-                    data.conflicts.forEach(id => soldSeats.add(id));
-                    applySoldSeats();
-                }
-                toast(currentLang === 'vi'
-                    ? 'Rất tiếc, một ghế bạn chọn vừa được đặt. Vui lòng chọn lại.'
-                    : 'Sorry — one of your seats was just taken. Please choose again.', 'error');
-                showSection('seats');
-                return;
-            }
-            if (!res.ok) {
-                toast(data.error || 'Booking failed. Please try again.', 'error');
-                return;
-            }
-
-            // Success.
-            document.getElementById('confName').textContent = name;
-            document.getElementById('confSeats').textContent =
-                data.seats.map(s => `F${s.floor}·${s.row}${s.num} (${s.tier})`).join(',  ');
-            toast(currentLang === 'vi' ? 'Đặt chỗ thành công! Email đã được gửi.' : 'Booking confirmed! Check your email.', 'success');
-            // Mark the seats we just booked as sold, but clear our local
-            // selection FIRST so applySoldSeats() doesn't mistake our own
-            // booking for someone else's and fire the conflict toast.
-            data.seats.forEach(s => soldSeats.add(s.seat_id));
-            selectedSeats = [];
-            document.querySelectorAll('.seat.selected').forEach(el => el.classList.remove('selected'));
-            applySoldSeats();
-            updateUI();
-            showSection('confirmation');
-        } catch (err) {
-            toast(currentLang === 'vi' ? 'Lỗi mạng. Vui lòng thử lại.' : 'Network error. Please try again.', 'error');
-        } finally {
-            btn.disabled = false;
-            label.textContent = originalLabel;
-        }
+        toast("This is a static demo. Booking is not stored. For real use, connect a backend (Node.js).", "error");
+        // No actual POST – just simulate resetting selection.
+        // If you want to keep the selection cleared for demo purposes:
+        selectedSeats = [];
+        document.querySelectorAll('.seat.selected').forEach(s => s.classList.remove('selected'));
+        updateUI();
+        showSection('home');
     }
 
     document.getElementById('bookingForm').addEventListener('submit', submitBooking);
 
     // =========================================================================
-    //  Init
+    //  INIT
     // =========================================================================
     buildMap();
     setLang('en');
-    refreshSoldSeats();
-    // Poll every 15 s so the map stays fresh for concurrent viewers.
-    setInterval(refreshSoldSeats, 15000);
     </script>
 </body>
 </html>
