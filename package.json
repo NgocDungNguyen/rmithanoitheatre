@@ -1,0 +1,24 @@
+{
+  "name": "rmit-theatre-booking",
+  "version": "1.0.0",
+  "description": "RMIT Hanoi Musical Theatre Club — seat booking backend",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "import:locks": "node scripts/import_theatre_csv.js theatre_data.csv",
+    "test:concurrency": "node test-concurrency.js",
+    "test:concurrency:heavy": "node test-concurrency.js 64 25 30",
+    "test:admin": "node test-admin.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "nodemailer": "^6.9.15"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

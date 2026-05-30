@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theat.R Production #3 — La La Land: The Cost of the Dream</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cobalt-deep: #0b032d;
+            --cobalt-mid:  #1a0a4a;
+            --gold:        #f7dc8a;
+            --gold-bright: #fff1b6;
+            --cream:       #fbf5e7;
+            --glass:       rgba(32, 18, 83, 0.45);
+            --glass-deep:  rgba(11, 3, 45, 0.78);
+            --line:        rgba(247, 220, 138, 0.22);
+            --vip:         #8B0000;
+            --stars:       #A385E0;
+            --artists:     #8BA9E8;
+            --dreamers:    #F8E58C;
+            --font-display: 'Playfair Display', serif;
+            --font-body:    'DM Sans', sans-serif;
+        }
+        * { -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--cobalt-deep);
+            background-image:
+                radial-gradient(circle at 20% 10%, rgba(163,133,224,0.18), transparent 45%),
+                radial-gradient(circle at 80% 30%, rgba(139,169,232,0.14), transparent 50%),
+                radial-gradient(circle at 50% 90%, rgba(247,220,138,0.08), transparent 55%),
+                linear-gradient(180deg, #0b032d 0%, #12063d 50%, #070121 100%);
+            background-attachment: fixed;
+            color: var(--cream);
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image:
+                radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.6), transparent 50%),
+                radial-gradient(1px 1px at 25% 65%, rgba(255,255,255,.5), transparent 50%),
+                radial-gradient(1px 1px at 45% 85%, rgba(255,255,255,.6), transparent 50%),
+                radial-gradient(1px 1px at 65% 15%, rgba(255,255,255,.4), transparent 50%),
+                radial-gradient(1px 1px at 80% 55%, rgba(255,255,255,.6), transparent 50%),
+                radial-gradient(1px 1px at 92% 80%, rgba(255,255,255,.4), transparent 50%);
+            pointer-events: none; z-index: 0;
+        }
+        main, nav, section { position: relative; z-index: 1; }
+
+        /* -------- Navigation -------- */
+        .site-nav {
+            position: sticky; top: 0; z-index: 1000;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.75rem 1.5rem;
+            background: rgba(11, 3, 45, 0.92);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--line);
+        }
+        .nav-brand {
+            font-family: var(--font-display); font-weight: 900;
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            color: var(--gold); text-decoration: none;
+            letter-spacing: -0.02em; text-transform: uppercase;
+        }
+        .nav-menu { display: flex; align-items: center; gap: 1rem; }
+
+        .pill {
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,.06);
+            color: var(--cream);
+            padding: 8px 16px; border-radius: 999px;
+            cursor: pointer; font-weight: 700; font-size: 0.8rem;
+            transition: all .2s ease;
+        }
+        .pill:hover { background: rgba(255,255,255,.12); }
+        .pill.active { background: var(--gold); color: var(--cobalt-deep); box-shadow: 0 4px 16px rgba(247,220,138,.25); }
+
+        .panel {
+            background: var(--glass);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.35);
+        }
+
+        /* -------- Hero -------- */
+        .hero-wrap {
+            position: relative;
+            min-height: 92vh;
+            padding: 3rem 1.5rem 5rem;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        .hero-wrap::before {
+            content: '';
+            position: absolute; inset: -10% -10% 0 -10%;
+            background:
+                radial-gradient(ellipse 60% 50% at 50% 0%, rgba(247,220,138,.22), transparent 60%),
+                radial-gradient(circle 60% at 50% 110%, rgba(163,133,224,.18), transparent 60%);
+            pointer-events: none;
+        }
+        .hero-wrap > * { position: relative; z-index: 1; }
+
+        .hero-eyebrow {
+            font-size: clamp(.7rem, 1.2vw, .85rem);
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: rgba(251,245,231,.65);
+            font-weight: 600;
+            margin-bottom: 1.4rem;
+        }
+        .hero-mega {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: clamp(3.4rem, 13vw, 10.5rem);
+            line-height: .88;
+            letter-spacing: -.035em;
+            background: linear-gradient(180deg, #fff5d0 0%, #f7dc8a 40%, #c9a558 100%);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 6px 60px rgba(247,220,138,.35));
+            margin: 0;
+            animation: heroRise .9s cubic-bezier(.2,.8,.2,1) both;
+        }
+        @keyframes heroRise {
+            from { opacity: 0; transform: translateY(24px); letter-spacing: 0; }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .hero-sub {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 700;
+            font-size: clamp(1.3rem, 3vw, 2.4rem);
+            color: rgba(251,245,231,.85);
+            margin: 1rem 0 0;
+            letter-spacing: -.01em;
+        }
+        .hero-tagline {
+            font-size: clamp(.9rem, 1.4vw, 1.05rem);
+            color: rgba(251,245,231,.6);
+            max-width: 52ch;
+            margin: .9rem auto 0;
+            line-height: 1.55;
+        }
+
+        /* Info card */
+        .info-card {
+            margin-top: 3rem;
+            padding: 1.6rem 2.2rem;
+            background: rgba(11,3,45,.55);
+            border: 1px solid rgba(247,220,138,.22);
+            backdrop-filter: blur(14px);
+            border-radius: 22px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,.45);
+            max-width: 780px; width: 100%;
+        }
+        .info-col { padding: .4rem 1.3rem; text-align: center; position: relative; }
+        .info-col + .info-col::before {
+            content: ''; position: absolute; left: 0; top: 10%; bottom: 10%;
+            border-left: 1px solid rgba(247,220,138,.18);
+        }
+        .info-col h4 {
+            font-size: .62rem; letter-spacing: .34em; text-transform: uppercase;
+            color: var(--gold); font-weight: 700; margin-bottom: .55rem;
+        }
+        .info-col .big {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+            color: var(--cream); line-height: 1.1;
+        }
+        .info-col .sub { display: block; font-size: .72rem; color: rgba(251,245,231,.55); margin-top: .35rem; letter-spacing: .04em; }
+
+        /* Hero tier swatches (compact variant inside the hero) */
+        .hero-tiers { margin-top: 1.6rem; width: 100%; max-width: 780px; }
+        .hero-tiers .tier-grid { gap: .6rem; }
+        .hero-tiers .tier-card { padding: .9rem .5rem; }
+        .hero-tiers .tier-card .tier-name { font-size: clamp(.9rem, 1.4vw, 1.1rem); }
+
+        /* Hero CTAs */
+        .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 1.6rem; }
+        .btn-ghost {
+            background: transparent;
+            color: var(--cream);
+            font-weight: 700;
+            border: 1px solid rgba(247,220,138,.4);
+            border-radius: 999px;
+            padding: 12px 24px;
+            transition: all .2s;
+            letter-spacing: .04em;
+        }
+        .btn-ghost:hover { background: rgba(247,220,138,.08); border-color: var(--gold); color: var(--gold-bright); transform: translateY(-2px); }
+
+        /* Section scaffolding below hero */
+        .section-block { max-width: 64rem; margin: 0 auto; padding: 3rem 1.5rem; }
+        .section-title {
+            font-family: var(--font-display); font-weight: 700;
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            color: var(--gold);
+            margin-bottom: 1.2rem; letter-spacing: -.01em;
+        }
+        .tier-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: .75rem; }
+        .tier-card {
+            padding: 1.25rem .5rem; border-radius: 18px;
+            text-align: center;
+            transition: transform .2s, box-shadow .2s, filter .2s;
+        }
+        .tier-card:hover { transform: translateY(-3px); filter: brightness(1.05); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+        .tier-card .tier-name {
+            font-family: var(--font-display); font-weight: 700;
+            font-size: clamp(1rem, 1.8vw, 1.35rem);
+            letter-spacing: .04em;
+        }
+
+        @media (max-width: 640px) {
+            .info-card { grid-template-columns: 1fr; gap: 0; padding: 1.2rem; }
+            .info-col { padding: .8rem 0; }
+            .info-col + .info-col::before { left: 10%; right: 10%; top: 0; bottom: auto; border-top: 1px solid rgba(247,220,138,.15); border-left: none; }
+            .hero-wrap { min-height: 82vh; padding-top: 1.5rem; }
+        }
+
+        /* -------- Seats -------- */
+        .seat {
+            transition: transform .18s ease, filter .18s ease, box-shadow .18s ease, background-color .18s ease;
+            cursor: pointer; user-select: none;
+            font-size: 0.65rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(0,0,0,0.18);
+            border-radius: 5px;
+        }
+        .seat:hover:not(.sold):not(.vip) { transform: translateY(-2px) scale(1.08); filter: brightness(1.15); box-shadow: 0 4px 12px rgba(0,0,0,.35); z-index: 5; }
+        .seat.selected {
+            background: linear-gradient(135deg, #ffffff, #fff1b6) !important;
+            color: #0b032d !important;
+            box-shadow: 0 0 0 2px #fff, 0 0 18px rgba(255,241,182,.8);
+            transform: scale(1.06);
+        }
+        .seat.sold {
+            background: rgba(255,255,255,.06) !important;
+            color: rgba(255,255,255,.18) !important;
+            cursor: not-allowed;
+            border-color: rgba(255,255,255,.08);
+        }
+        .seat.sold::after {
+            content: '✕'; position: absolute;
+            font-size: .55rem; color: rgba(255,255,255,.3);
+        }
+        .seat.vip { cursor: not-allowed; opacity: .95; }
+        .seat.vip::after { content: ''; }
+
+        .vip-bg      { background: linear-gradient(135deg, #a10808, #6b0000); color: #fff1b6; }
+        .stars-bg    { background: linear-gradient(135deg, #b99af0, #8a6bd4); color: #0b032d; }
+        .artists-bg  { background: linear-gradient(135deg, #a7c1ef, #6b8fd8); color: #0b032d; }
+        .dreamers-bg { background: linear-gradient(135deg, #fbeca3, #eacf6a); color: #3a2a00; }
+
+        /* -------- Map frame -------- */
+        .map-legend { display: flex; flex-direction: column; gap: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.8rem; }
+        .legend-box { width: 22px; height: 22px; border-radius: 5px; border: 1px solid rgba(0,0,0,.2); }
+        .aisle { width: 40px; flex-shrink: 0; }
+        .seat-row { display: flex; gap: 2px; justify-content: center; margin-bottom: 3px; align-items: center; }
+        .rowlbl { width: 28px; text-align: center; font-weight: 800; color: var(--gold); font-size: .85rem; flex-shrink: 0; }
+
+        .stage-wrap { display: flex; justify-content: center; margin-bottom: 2.5rem; }
+        .stage-curve {
+            width: 75%;
+            height: 96px;
+            border-bottom-left-radius: 50% 100%;
+            border-bottom-right-radius: 50% 100%;
+            border: 2px solid var(--gold);
+            border-top: none;
+            background: radial-gradient(ellipse at top, rgba(247,220,138,.18), rgba(255,255,255,.02));
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 40px rgba(247,220,138,.1), inset 0 -20px 40px rgba(247,220,138,.08);
+        }
+
+        .map-shell { position: relative; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+        .map-viewport { min-width: max-content; margin: 0 auto; }
+        /* Subtle scrollbar styling for the map shell */
+        .map-shell::-webkit-scrollbar { height: 8px; }
+        .map-shell::-webkit-scrollbar-track { background: rgba(255,255,255,.04); border-radius: 999px; }
+        .map-shell::-webkit-scrollbar-thumb { background: rgba(247,220,138,.35); border-radius: 999px; }
+        .map-shell::-webkit-scrollbar-thumb:hover { background: rgba(247,220,138,.55); }
+        .floor-divider {
+            width: 100%; margin: 48px 0 28px;
+            border-top: 1px dashed rgba(247,220,138,.3);
+            position: relative; text-align: center;
+        }
+        .floor-divider span {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(180deg, #1a0a4a, #0b032d);
+            padding: 6px 20px;
+            font-family: var(--font-display); font-style: italic;
+            font-size: 1.5rem; color: var(--gold);
+            border-radius: 999px; border: 1px solid var(--line);
+        }
+
+        /* -------- Buttons / inputs -------- */
+        .btn-primary {
+            background: linear-gradient(135deg, #fff1b6, #f7dc8a);
+            color: var(--cobalt-deep); font-weight: 800;
+            border-radius: 999px; padding: 12px 24px;
+            transition: transform .2s, box-shadow .2s, filter .2s;
+            box-shadow: 0 6px 24px rgba(247,220,138,.25);
+        }
+        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 10px 32px rgba(247,220,138,.45); }
+        .btn-primary:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+        .hidden { display: none !important; }
+        input, textarea {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--line);
+            padding: 12px 14px; border-radius: 12px;
+            color: white; width: 100%; outline: none;
+            transition: border-color .15s, background .15s;
+        }
+        input:focus, textarea:focus { border-color: var(--gold); background: rgba(255,255,255,.08); }
+        input::placeholder { color: rgba(251,245,231,.35); }
+        input.invalid, textarea.invalid {
+            border-color: rgba(239,120,120,.7);
+            background: rgba(239,120,120,.08);
+        }
+        .field-error {
+            color: #ffbfbf;
+            font-size: .78rem;
+            margin-top: .4rem;
+            font-weight: 500;
+        }
+
+        /* -------- Toast -------- */
+        .toast-wrap {
+            position: fixed; top: 72px; left: 50%; transform: translateX(-50%);
+            z-index: 2000; display: flex; flex-direction: column; gap: 8px;
+            max-width: 92vw; width: 420px; pointer-events: none;
+        }
+        .toast {
+            background: rgba(11,3,45,.95); border: 1px solid var(--line);
+            color: var(--cream); padding: 12px 16px; border-radius: 14px;
+            font-size: .9rem; font-weight: 500;
+            box-shadow: 0 10px 40px rgba(0,0,0,.5);
+            animation: toastIn .25s ease;
+            pointer-events: auto;
+        }
+        .toast.success { border-color: rgba(163,226,144,.55); }
+        .toast.error   { border-color: rgba(239,120,120,.55); }
+        @keyframes toastIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* -------- Loading -------- */
+        .spinner {
+            width: 16px; height: 16px; border-radius: 999px;
+            border: 2px solid rgba(251,245,231,.3);
+            border-top-color: var(--cobalt-deep);
+            animation: spin .7s linear infinite;
+            display: inline-block; vertical-align: middle; margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* -------- Price summary -------- */
+
+        /* -------- Responsive -------- */
+        @media (max-width: 640px) {
+            .site-nav { padding: 0.5rem 1rem; }
+            .nav-brand { font-size: 1.1rem; }
+            .rowlbl { font-size: 0.65rem; width: 22px; }
+            .aisle { width: 25px; }
+            .seat-row { gap: 2px; }
+            .panel { border-radius: 16px; padding: 0.5rem !important; }
+            #registerSection .panel { padding: 1rem !important; }
+            #seatsSection { padding: 1rem 0; }
+            .seat { width: 18px !important; height: 18px !important; font-size: 0.6rem !important; }
+            .stage-curve { height: 72px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="site-nav">
+        <a href="#" class="nav-brand" onclick="showSection('home'); return false;">La La Land</a>
+        <div class="nav-menu">
+            <div class="hidden sm:flex items-center gap-6 mr-6 text-[10px] uppercase tracking-widest font-bold text-cream/60">
+                <span class="cursor-pointer hover:text-[color:var(--gold)] transition" onclick="showSection('home')" data-i18n="navHome">Home</span>
+                <span class="cursor-pointer hover:text-[color:var(--gold)] transition" onclick="showSection('seats')" data-i18n="navSeats">Seats</span>
+            </div>
+            <div class="flex gap-2">
+                <button class="pill active" id="btnEN" onclick="setLang('en')">EN</button>
+                <button class="pill" id="btnVN" onclick="setLang('vi')">VN</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <!-- ================= HOME ================= -->
+    <section id="homeSection">
+        <!-- Hero -->
+        <div class="hero-wrap">
+            <div class="hero-eyebrow" data-i18n="heroEyebrow">RMIT Hanoi Musical Theatre Club · Theat.R Production #3</div>
+
+            <h1 class="hero-mega">La La Land</h1>
+            <p class="hero-sub" data-i18n="heroSub">The Cost of the Dream</p>
+            <p class="hero-tagline" data-i18n="heroTagline">An original musical about dreams, ambition, and the cost of chasing them — told through the songs you love, rewritten for one unforgettable night.</p>
+
+            <div class="info-card">
+                <div class="info-col">
+                    <h4 data-i18n="dateLabel">Date</h4>
+                    <p class="big">30 May 2026</p>
+                    <span class="sub" data-i18n="dateSub">Saturday</span>
+                </div>
+                <div class="info-col">
+                    <h4 data-i18n="timeLabel">Time</h4>
+                    <p class="big">7:00 PM</p>
+                    <span class="sub" data-i18n="checkin">(check-in starts at 6PM)</span>
+                </div>
+                <div class="info-col">
+                    <h4 data-i18n="venueLabel">Venue</h4>
+                    <p class="big" style="font-size: clamp(.95rem, 1.5vw, 1.2rem)">Nhà văn hoá Q. Đống Đa</p>
+                    <span class="sub">22 Đặng Tiến Đông, Hà Nội</span>
+                </div>
+            </div>
+
+            <!-- Tier swatches (inside hero, directly above CTA) -->
+            <div class="hero-tiers">
+                <div class="tier-grid">
+                    <div class="tier-card stars-bg text-[color:var(--cobalt-deep)]">
+                        <div class="tier-name">The Stars</div>
+                    </div>
+                    <div class="tier-card artists-bg text-[color:var(--cobalt-deep)]">
+                        <div class="tier-name">The Artists</div>
+                    </div>
+                    <div class="tier-card dreamers-bg text-[#3a2a00]">
+                        <div class="tier-name">The Dreamers</div>
+                    </div>
+                </div>
+                <p class="text-xs text-[color:var(--gold)]/70 italic mt-3 text-center" data-i18n="vipNote">SEATMAP (note: VIP seats cannot be selected, only for guests)</p>
+            </div>
+
+            <div class="hero-cta">
+                <button class="btn-primary text-lg" onclick="showSection('seats')"><span data-i18n="startReg">Reserve Your Seats</span>&nbsp;→</button>
+            </div>
+        </div>
+
+        <!-- About -->
+        <div class="section-block">
+            <div class="panel p-8">
+                <h2 class="section-title" data-i18n="aboutTitle">About Us</h2>
+                <div id="aboutContent" class="space-y-4 leading-relaxed text-cream/90"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SEATS ================= -->
+    <section id="seatsSection" class="hidden py-12 px-4 min-h-screen">
+        <div class="max-w-[1400px] mx-auto flex flex-col lg:flex-row gap-8">
+
+            <div class="flex-1">
+                <div class="stage-wrap">
+                    <div class="stage-curve">
+                        <h1 class="text-2xl sm:text-4xl font-bold uppercase tracking-[0.2em] text-[color:var(--dreamers)]">stage / sân khấu</h1>
+                    </div>
+                </div>
+
+                <div id="seatContainer" class="map-shell mb-12 pb-4 panel p-4 md:p-6">
+                    <div class="map-viewport" id="mapViewport">
+                        <div id="floor1-map" class="flex flex-col gap-1"></div>
+
+                        <div class="floor-divider">
+                            <span data-i18n="floor2">tầng 2 / second floor</span>
+                        </div>
+
+                        <div id="floor2-map" class="flex flex-col gap-1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-80 flex flex-col gap-6">
+                <div class="panel p-6 lg:sticky lg:top-24">
+                    <h3 class="text-xl font-bold mb-4 border-b border-[color:var(--gold)]/20 pb-2 text-[color:var(--gold)]" data-i18n="summaryTitle">Summary</h3>
+
+                    <div class="map-legend mb-6">
+                        <div class="legend-item"><div class="legend-box vip-bg opacity-70"></div> <span data-i18n="vipLegend">VIP (Not Selectable)</span></div>
+                        <div class="legend-item"><div class="legend-box stars-bg"></div> <span data-i18n="starsLegend">The Stars</span></div>
+                        <div class="legend-item"><div class="legend-box artists-bg"></div> <span data-i18n="artistsLegend">The Artists</span></div>
+                        <div class="legend-item"><div class="legend-box dreamers-bg"></div> <span data-i18n="dreamersLegend">The Dreamers</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background:linear-gradient(135deg,#fff,#fff1b6)"></div> <span data-i18n="selectedLegend">Selected</span></div>
+                        <div class="legend-item"><div class="legend-box" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)"></div> <span data-i18n="soldLegend">Booked</span></div>
+                    </div>
+
+                    <div id="selection-list" class="space-y-2 mb-6 max-h-60 overflow-y-auto text-sm">
+                        <p class="text-cream/40 italic" data-i18n="noSeats">No seats selected</p>
+                    </div>
+
+                    <div class="pt-4 border-t border-[color:var(--gold)]/20">
+                        <div class="flex justify-between items-center mb-5">
+                            <span class="text-cream/60" data-i18n="selectedCount">Selected:</span>
+                            <span id="countDisplay" class="text-xl font-bold text-[color:var(--gold)]">0</span>
+                        </div>
+                        <button id="btnContinue" class="w-full btn-primary" disabled onclick="showSection('register')" data-i18n="continueBtn">Continue to Register</button>
+                        <button class="w-full mt-3 pill" onclick="showSection('home')" data-i18n="back">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= REGISTER ================= -->
+    <section id="registerSection" class="hidden max-w-2xl mx-auto px-6 py-12">
+        <div class="panel p-6 sm:p-10">
+            <h2 class="text-3xl font-display text-[color:var(--gold)] mb-8" data-i18n="regTitle">Complete your Registration</h2>
+
+            <div class="mb-8">
+                <h3 class="text-xs uppercase tracking-widest text-[color:var(--gold)] mb-4" data-i18n="summaryTitle">Summary</h3>
+                <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                    <h4 class="text-[10px] uppercase text-cream/50 tracking-wider mb-2" data-i18n="selSeatTitle">Selected Seats</h4>
+                    <div id="regSummary" class="font-semibold text-[color:var(--gold)] text-base space-y-1"></div>
+                </div>
+            </div>
+
+            <form id="bookingForm" class="space-y-5" autocomplete="on" novalidate>
+                <div>
+                    <label class="block text-xs uppercase mb-2 text-[color:var(--gold)]" data-i18n="formName">Full Name</label>
+                    <input type="text" id="regName" required>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase mb-2 text-[color:var(--gold)]" data-i18n="formEmail">Email Address</label>
+                    <input type="email" id="regEmail" required autocomplete="email" placeholder="you@example.com" inputmode="email">
+                    <p class="field-error hidden" id="regEmailErr" data-i18n="emailErr">Please enter a valid email address.</p>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase mb-2 text-[color:var(--gold)]" data-i18n="formPhone">Phone Number</label>
+                    <input type="tel" id="regPhone" required autocomplete="tel" placeholder="0xxxxxxxxx" inputmode="numeric" maxlength="10">
+                    <p class="field-error hidden" id="regPhoneErr" data-i18n="phoneErr">Please enter a 10-digit phone number starting with 0.</p>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase mb-2 text-[color:var(--gold)]" data-i18n="formSid">sID (RMIT Student/Staff ID)</label>
+                    <input type="text" id="regSID" placeholder="Optional">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase mb-2 text-[color:var(--gold)]" data-i18n="refLabel">Referral Code (Optional)</label>
+                    <input type="text" id="regRef" placeholder="Optional">
+                </div>
+
+                <div class="flex gap-4 pt-4">
+                    <button type="button" class="pill flex-1 py-4" onclick="showSection('seats')" data-i18n="back">Back</button>
+                    <button type="submit" id="submitBtn" class="btn-primary flex-1"><span id="submitLabel" data-i18n="confirmBtnLabel">Confirm Booking</span></button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ================= CONFIRMATION ================= -->
+    <section id="confirmationSection" class="hidden max-w-2xl mx-auto px-6 py-20 text-center">
+        <div class="panel p-10 sm:p-12">
+            <div class="w-20 h-20 bg-[color:var(--gold)] rounded-full flex items-center justify-center mx-auto mb-8 text-[color:var(--cobalt-deep)] text-4xl shadow-[0_0_40px_rgba(247,220,138,.4)]">✓</div>
+            <h2 class="text-3xl sm:text-4xl font-display text-[color:var(--gold-bright)] mb-4" data-i18n="confTitle">Registration Confirmed!</h2>
+            <p class="text-cream/70 leading-relaxed mb-10" data-i18n="confSub">Your seats have been reserved. Please check your email as soon as possible for further confirmation process and details.</p>
+
+            <div class="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 text-left mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                    <div><h4 class="text-[10px] uppercase text-[color:var(--gold)] tracking-widest mb-1">DATE</h4><p class="font-bold">30 MAY 2026</p></div>
+                    <div><h4 class="text-[10px] uppercase text-[color:var(--gold)] tracking-widest mb-1">TIME</h4><p class="font-bold">7PM – 8:30PM</p><p class="text-cream/60 text-sm mt-1" data-i18n="checkin">(check-in starts at 6PM)</p></div>
+                    <div><h4 class="text-[10px] uppercase text-[color:var(--gold)] tracking-widest mb-1">VENUE</h4><p class="font-bold">Nhà văn hoá Quận Đống Đa</p><p class="text-cream/60 text-sm mt-1">22 Đặng Tiến Đông, Hà Nội</p></div>
+                    <div><h4 class="text-[10px] uppercase text-[color:var(--gold)] tracking-widest mb-1" data-i18n="confNameLbl">Name</h4><p id="confName" class="font-bold">-</p></div>
+                    <div class="md:col-span-2"><h4 class="text-[10px] uppercase text-[color:var(--gold)] tracking-widest mb-1" data-i18n="confSeatsLbl">Seats</h4><p id="confSeats" class="font-bold">-</p></div>
+                </div>
+            </div>
+
+            <p class="text-xs text-cream/60 italic mb-8" data-i18n="confirmationHint">A confirmation email has been sent to your inbox with bank-transfer details. Please reply with your payment screenshot within 48 hours.</p>
+
+            <button class="btn-primary w-full py-4 text-lg" onclick="resetAndGoHome()" data-i18n="backHome">Back to Home</button>
+        </div>
+    </section>
+
+    <script>
+    // =========================================================================
+    //  i18n
+    // =========================================================================
+    const translations = {
+        en: {
+            navHome: "Home", navSeats: "Seats",
+            heroEyebrow: "RMIT Hanoi Musical Theatre Club · Theat.R Production #3",
+            heroSub: "The Cost of the Dream",
+            heroTagline: "An original musical about dreams, ambition, and the cost of chasing them — told through the songs you love, rewritten for one unforgettable night.",
+            dateLabel: "Date", dateSub: "Saturday",
+            timeLabel: "Time",
+            venueLabel: "Venue",
+            tierTitle: "Seating Tiers",
+            viewSeatmap: "View Seating Map",
+            aboutTitle: "About Us",
+            checkin: "(check-in starts at 6PM)",
+            startReg: "Reserve Your Seats",
+            vipNote: "SEATMAP (note: VIP seats cannot be selected, only for guests)",
+            back: "Back",
+            continueBtn: "Continue to Register",
+            regTitle: "Complete your Registration",
+            summaryTitle: "Summary",
+            selSeatTitle: "Selected Seats",
+            floor2: "tầng 2 / second floor",
+            formName: "Full Name",
+            vipLegend: "VIP (Not Selectable)",
+            starsLegend: "The Stars",
+            artistsLegend: "The Artists",
+            dreamersLegend: "The Dreamers",
+            selectedLegend: "Selected",
+            soldLegend: "Booked",
+            formEmail: "Email Address",
+            formPhone: "Phone Number",
+            formSid: "sID (RMIT Student/Staff ID)",
+            emailErr: "Please enter a valid email address.",
+            phoneErr: "Please enter a 10-digit phone number starting with 0.",
+            formFixErrors: "Please fix the highlighted fields.",
+            confirmBtnLabel: "Confirm Booking",
+            confTitle: "Registration Confirmed!",
+            confSub: "Your seats have been reserved. Please check your email for further details.",
+            backHome: "Back to Home",
+            selectedCount: "Selected:",
+            refLabel: "Referral Code (Optional)",
+            noSeats: "No seats selected",
+            confNameLbl: "Name", confSeatsLbl: "Seats",
+            confirmationHint: "A confirmation email has been sent to your inbox with payment details. Please reply with your transfer screenshot within 48 hours.",
+        },
+        vi: {
+            navHome: "Trang chủ", navSeats: "Chỗ ngồi",
+            heroEyebrow: "CLB Nhạc kịch RMIT Hà Nội · Theat.R Production #3",
+            heroSub: "Cái Giá Của Ước Mơ",
+            heroTagline: "Vở nhạc kịch nguyên tác về ước mơ, đam mê và cái giá của việc theo đuổi chúng — qua những ca khúc quen thuộc, được kể lại cho một đêm duy nhất.",
+            dateLabel: "Ngày", dateSub: "Thứ Bảy",
+            timeLabel: "Giờ",
+            venueLabel: "Địa điểm",
+            tierTitle: "Hạng ghế",
+            viewSeatmap: "Xem sơ đồ ghế",
+            aboutTitle: "Giới thiệu Ban tổ chức",
+            checkin: "(check-in bắt đầu lúc 6PM)",
+            startReg: "Đặt chỗ của bạn",
+            vipNote: "SƠ ĐỒ GHẾ (lưu ý: vé VIP không chọn được, chỉ dành cho khách mời)",
+            back: "Quay lại",
+            continueBtn: "Tiếp tục đăng ký",
+            regTitle: "Hoàn tất đăng ký",
+            summaryTitle: "Thông tin tóm tắt",
+            selSeatTitle: "Ghế đã chọn",
+            floor2: "tầng 2 / second floor",
+            formName: "Họ và tên",
+            vipLegend: "VIP (Không thể chọn)",
+            starsLegend: "The Stars",
+            artistsLegend: "The Artists",
+            dreamersLegend: "The Dreamers",
+            selectedLegend: "Đã chọn",
+            soldLegend: "Đã đặt",
+            formEmail: "Địa chỉ Email",
+            formPhone: "Số điện thoại",
+            formSid: "sID (Mã sinh viên/nhân viên RMIT)",
+            emailErr: "Vui lòng nhập địa chỉ email hợp lệ.",
+            phoneErr: "Vui lòng nhập số điện thoại 10 chữ số bắt đầu bằng 0.",
+            formFixErrors: "Vui lòng sửa các trường được đánh dấu.",
+            confirmBtnLabel: "Xác nhận đặt chỗ",
+            confTitle: "Đăng ký thành công!",
+            confSub: "Chỗ ngồi của bạn đã được đặt. Vui lòng kiểm tra email để biết thêm chi tiết.",
+            backHome: "Về trang chủ",
+            selectedCount: "Đã chọn:",
+            refLabel: "Mã giới thiệu (Nếu có)",
+            noSeats: "Chưa chọn ghế nào",
+            confNameLbl: "Họ tên", confSeatsLbl: "Ghế",
+            confirmationHint: "Email xác nhận đã được gửi kèm thông tin chuyển khoản. Vui lòng phản hồi kèm ảnh chuyển khoản trong vòng 48 giờ.",
+        }
+    };
+
+    const about = {
+        en: `RMIT Hanoi Musical Theatre Club, founded in 2022, brings together students passionate about musical theatre, where singing, acting, and movement blend to tell compelling stories.\n\nLa La Land: The Cost of the Dream is our original musical, inspired by the film La La Land. While featuring iconic songs from the movie, the production presents a brand-new storyline alongside newly written original pieces, offering a fresh perspective on dreams, ambition, and the cost of pursuing them. With electrifying performances, captivating choreography, and the unique magic of live theatre, the show will have you laughing, moved, and believing in the power of dreams. This is a musical you won't want to miss. Get ready for an unforgettable night!`,
+        vi: `Câu Lạc Bộ Nhạc kịch RMIT Hà Nội, được thành lập vào năm 2022, là nơi quy tụ những sinh viên đam mê nghệ thuật biểu diễn, đặc biệt là nhạc kịch – nơi âm nhạc, diễn xuất và chuyển động hòa quyện để kể nên những câu chuyện giàu cảm xúc.\n\nLa La Land: The Cost of the Dream (La La Land: Cái Giá Của Ước Mơ) là vở nhạc kịch nguyên tác của CLB, lấy cảm hứng từ bộ phim La La Land. Vở diễn sử dụng những ca khúc quen thuộc trong phim, đồng thời được xây dựng lại với một kịch bản hoàn toàn mới cùng các sáng tác âm nhạc original, mang đến một góc nhìn khác về giấc mơ, đam mê và cái giá của việc theo đuổi chúng. Với những màn trình diễn đầy năng lượng, phần vũ đạo cuốn hút và "phép màu" rất riêng của sân khấu, vở diễn hứa hẹn sẽ khiến bạn cười, rung động và đồng cảm với hành trình theo đuổi ước mơ. Đây chắc chắn là một đêm nhạc kịch bạn không nên bỏ lỡ. Hãy sẵn sàng cho một trải nghiệm đáng nhớ!`
+    };
+
+    let currentLang = 'en';
+    let selectedSeats = [];   // [{ id, floor, row, num, tier }]
+    let soldSeats = new Set();
+
+
+    function setLang(lang) {
+        currentLang = lang;
+        document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+        document.getElementById('btnVN').classList.toggle('active', lang === 'vi');
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.dataset.i18n;
+            if (translations[lang][key] !== undefined) el.textContent = translations[lang][key];
+        });
+        document.getElementById('aboutContent').innerHTML = about[lang].split('\n\n').map(p => `<p>${p}</p>`).join('');
+    }
+
+    // =========================================================================
+    //  Toast
+    // =========================================================================
+    function toast(msg, type = '') {
+        const wrap = document.getElementById('toastWrap');
+        const el = document.createElement('div');
+        el.className = `toast ${type}`;
+        el.textContent = msg;
+        wrap.appendChild(el);
+        setTimeout(() => { el.style.opacity = '0'; el.style.transform = 'translateY(-8px)'; setTimeout(() => el.remove(), 300); }, 4200);
+    }
+
+    // =========================================================================
+    //  Navigation
+    // =========================================================================
+    function showSection(id) {
+        ['homeSection', 'seatsSection', 'registerSection', 'confirmationSection'].forEach(s => {
+            document.getElementById(s).classList.add('hidden');
+        });
+        document.getElementById(id + 'Section').classList.remove('hidden');
+        window.scrollTo(0, 0);
+
+        if (id === 'seats') refreshSoldSeats();
+
+        if (id === 'register') {
+            document.getElementById('regSummary').innerHTML = selectedSeats.length
+                ? selectedSeats.map(s => `<div class="flex justify-between items-center border-b border-white/10 py-1.5">
+                        <span>Floor ${s.floor} · Row ${s.row} · Seat ${s.num}</span>
+                        <span class="text-[10px] uppercase font-black px-2 py-0.5 rounded ${s.tier.toLowerCase()}-bg">${s.tier}</span>
+                    </div>`).join('')
+                : '<div class="text-white/40">No seats selected</div>';
+        }
+    }
+    function resetAndGoHome() {
+        selectedSeats = [];
+        document.querySelectorAll('.seat.selected').forEach(s => s.classList.remove('selected'));
+        document.getElementById('bookingForm').reset();
+        ['regEmail', 'regPhone'].forEach(id => document.getElementById(id).classList.remove('invalid'));
+        ['regEmailErr', 'regPhoneErr'].forEach(id => document.getElementById(id).classList.add('hidden'));
+        updateUI();
+        showSection('home');
+    }
+
+    // =========================================================================
+    //  Seat map
+    // =========================================================================
+    // Seat-map spec derived from the reference image.
+    // Format: { row, floor, tier, left: { count, start }, right: { count, start } }
+    // left side numbers run high→low from outside in; right side runs high→low as well;
+    // start = outermost number on that side.
+    const MAP_FLOOR_1 = [
+        { row: 'A', tier: 'VIP',     left: { count: 12, start: 24 }, right: { count: 12, start: 12 } },
+        { row: 'B', tier: 'VIP',     left: { count: 12, start: 24 }, right: { count: 12, start: 12 } },
+        { row: 'C', tier: 'Stars',   left: { count: 12, start: 24 }, right: { count: 12, start: 12 } },
+        { row: 'D', tier: 'Stars',   left: { count: 13, start: 26 }, right: { count: 13, start: 13 } },
+        { row: 'E', tier: 'Stars',   left: { count: 13, start: 26 }, right: { count: 13, start: 13 } },
+        { row: 'F', tier: 'Stars',   left: { count: 13, start: 26 }, right: { count: 13, start: 13 } },
+        { row: 'G', tier: 'Artists', left: { count: 13, start: 26 }, right: { count: 13, start: 13 } },
+        { row: 'H', tier: 'Artists', left: { count: 13, start: 26 }, right: { count: 13, start: 13 } },
+        { row: 'J', tier: 'Artists', left: { count: 13, start: 26 }, right: { count: 13, start: 13 } },
+        { row: 'K', tier: 'Artists', left: { count: 14, start: 28 }, right: { count: 14, start: 14 } },
+        { row: 'L', tier: 'Artists', left: { count: 14, start: 28 }, right: { count: 14, start: 14 } },
+        { row: 'M', tier: 'Artists', left: { count: 14, start: 28 }, right: { count: 14, start: 14 } },
+        { row: 'N', tier: 'Artists', single: { count: 24, start: 24 } },
+    ];
+    const MAP_FLOOR_2 = [
+        { row: 'A', tier: 'Artists',  left: { count: 15, start: 30 }, right: { count: 15, start: 15 } },
+        { row: 'B', tier: 'Artists',  left: { count: 15, start: 30 }, right: { count: 15, start: 15 } },
+        { row: 'C', tier: 'Artists',  left: { count: 15, start: 30 }, right: { count: 15, start: 15 } },
+        { row: 'D', tier: 'Dreamers', left: { count: 12, start: 24 }, right: { count: 12, start: 12 } },
+        { row: 'E', tier: 'Dreamers', single: { count: 24, start: 24 } },
+    ];
+
+    function seatId(floor, row, num) { return `F${floor}-${row}-${num}`; }
+
+    function buildSeat(floor, row, num, tier) {
+        const seat = document.createElement('div');
+        const id = seatId(floor, row, num);
+        const isVip = tier === 'VIP';
+        seat.className = `seat w-6 h-6 sm:w-7 sm:h-7 ${tier.toLowerCase()}-bg`;
+        seat.dataset.id = id;
+        seat.innerText = num;
+        if (isVip) seat.classList.add('vip', 'sold');
+        else {
+            seat.onclick = () => toggleSeat(seat, { id, floor, row, num, tier });
+        }
+        return seat;
+    }
+
+    function toggleSeat(el, seat) {
+        if (el.classList.contains('sold')) return;
+        const idx = selectedSeats.findIndex(s => s.id === seat.id);
+        if (idx > -1) {
+            selectedSeats.splice(idx, 1);
+            el.classList.remove('selected');
+        } else {
+            if (selectedSeats.length >= 20) {
+                toast('Maximum 20 seats per booking', 'error');
+                return;
+            }
+            selectedSeats.push(seat);
+            el.classList.add('selected');
+        }
+        updateUI();
+    }
+
+    function buildRow(spec, floor, container) {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'seat-row';
+
+        const l1 = document.createElement('div'); l1.className = 'rowlbl'; l1.innerText = spec.row;
+        rowDiv.appendChild(l1);
+
+        if (spec.single) {
+            const strip = document.createElement('div'); strip.className = 'flex gap-0.5';
+            for (let i = spec.single.start; i >= spec.single.start - spec.single.count + 1; i--) {
+                strip.appendChild(buildSeat(floor, spec.row, i, spec.tier));
+            }
+            rowDiv.appendChild(strip);
+        } else {
+            const left = document.createElement('div'); left.className = 'flex gap-0.5';
+            for (let i = spec.left.start; i > spec.left.start - spec.left.count; i--) {
+                left.appendChild(buildSeat(floor, spec.row, i, spec.tier));
+            }
+            rowDiv.appendChild(left);
+
+            const aisle = document.createElement('div'); aisle.className = 'aisle';
+            rowDiv.appendChild(aisle);
+
+            const right = document.createElement('div'); right.className = 'flex gap-0.5';
+            for (let i = spec.right.start; i >= spec.right.start - spec.right.count + 1; i--) {
+                right.appendChild(buildSeat(floor, spec.row, i, spec.tier));
+            }
+            rowDiv.appendChild(right);
+        }
+
+        rowDiv.appendChild(l1.cloneNode(true));
+        container.appendChild(rowDiv);
+    }
+
+    function buildMap() {
+        const f1 = document.getElementById('floor1-map');
+        const f2 = document.getElementById('floor2-map');
+        f1.innerHTML = ''; f2.innerHTML = '';
+        MAP_FLOOR_1.forEach(spec => buildRow(spec, 1, f1));
+        MAP_FLOOR_2.forEach(spec => buildRow(spec, 2, f2));
+    }
+
+    function applySoldSeats() {
+        document.querySelectorAll('.seat').forEach(el => {
+            const id = el.dataset.id;
+            if (!id) return;
+            if (soldSeats.has(id) && !el.classList.contains('vip')) {
+                el.classList.add('sold');
+                el.classList.remove('selected');
+            }
+        });
+        // Remove selected seats that just became sold.
+        const before = selectedSeats.length;
+        selectedSeats = selectedSeats.filter(s => !soldSeats.has(s.id));
+        if (selectedSeats.length !== before) {
+            toast(currentLang === 'vi'
+                ? 'Một số ghế bạn chọn vừa được đặt. Vui lòng chọn lại.'
+                : 'Some seats you picked were just booked. Please pick again.', 'error');
+            updateUI();
+        }
+    }
+
+    async function refreshSoldSeats() {
+        try {
+            const res = await fetch('/api/seats', { cache: 'no-store' });
+            if (!res.ok) return;
+            const { sold } = await res.json();
+            soldSeats = new Set(sold);
+            applySoldSeats();
+        } catch (err) { /* offline — silently ignore */ }
+    }
+
+    function updateUI() {
+        const list = document.getElementById('selection-list');
+        const countDisplay = document.getElementById('countDisplay');
+        const btnContinue = document.getElementById('btnContinue');
+
+        if (selectedSeats.length === 0) {
+            list.innerHTML = `<p class="text-cream/40 italic">${translations[currentLang].noSeats}</p>`;
+            countDisplay.innerText = '0';
+            btnContinue.disabled = true;
+            return;
+        }
+
+        list.innerHTML = selectedSeats.map(seat => `
+            <div class="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/10">
+                <span class="font-bold">F${seat.floor} · ${seat.row}${seat.num}</span>
+                <span class="text-[10px] uppercase px-2 py-1 rounded-full ${seat.tier.toLowerCase()}-bg font-black">${seat.tier}</span>
+            </div>
+        `).join('');
+
+        countDisplay.innerText = selectedSeats.length;
+        btnContinue.disabled = false;
+    }
+
+    // =========================================================================
+    //  Form validation
+    // =========================================================================
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    /** Keep only digits so users can paste "+84 987 654 321" etc.; truncate to 10. */
+    function sanitizePhone(raw) {
+        return (raw || '').replace(/\D/g, '').slice(0, 10);
+    }
+    /** Exactly 10 digits, starting with 0. */
+    function isValidPhone(value) {
+        return /^0\d{9}$/.test(value || '');
+    }
+    function showFieldError(inputId, errorId, show) {
+        document.getElementById(inputId).classList.toggle('invalid', show);
+        document.getElementById(errorId).classList.toggle('hidden', !show);
+    }
+    function validateEmailField() {
+        const el = document.getElementById('regEmail');
+        const ok = !el.value.trim() || EMAIL_RE.test(el.value.trim());
+        showFieldError('regEmail', 'regEmailErr', !ok);
+        return ok;
+    }
+    function validatePhoneField() {
+        const el = document.getElementById('regPhone');
+        const ok = !el.value.trim() || isValidPhone(el.value);
+        showFieldError('regPhone', 'regPhoneErr', !ok);
+        return ok;
+    }
+
+    // Strip anything that isn't a digit, cap at 10 chars.
+    document.getElementById('regPhone').addEventListener('input', (e) => {
+        const cleaned = sanitizePhone(e.target.value);
+        if (cleaned !== e.target.value) e.target.value = cleaned;
+        if (e.target.classList.contains('invalid')) validatePhoneField();
+    });
+    document.getElementById('regPhone').addEventListener('blur', validatePhoneField);
+    document.getElementById('regEmail').addEventListener('blur', validateEmailField);
+    document.getElementById('regEmail').addEventListener('input', (e) => {
+        if (e.target.classList.contains('invalid')) validateEmailField();
+    });
+
+    // =========================================================================
+    //  Booking submission
+    // =========================================================================
+    async function submitBooking(e) {
+        e.preventDefault();
+        const name  = document.getElementById('regName').value.trim();
+        const email = document.getElementById('regEmail').value.trim();
+        const phone = document.getElementById('regPhone').value.trim();
+        const sid   = document.getElementById('regSID').value.trim();
+        const ref   = document.getElementById('regRef').value.trim();
+
+        // Required-field check first.
+        if (!name || !email || !phone) {
+            toast(currentLang === 'vi'
+                ? 'Vui lòng điền họ tên, email và số điện thoại.'
+                : 'Please fill in name, email, and phone.', 'error');
+            return;
+        }
+        // Field-level validation; reveal inline errors.
+        const emailOk = validateEmailField();
+        const phoneOk = validatePhoneField();
+        if (!(emailOk && phoneOk)) {
+            toast(translations[currentLang].formFixErrors, 'error');
+            (emailOk ? document.getElementById('regPhone') : document.getElementById('regEmail')).focus();
+            return;
+        }
+        if (selectedSeats.length === 0) { toast('No seats selected.', 'error'); showSection('seats'); return; }
+
+        const btn = document.getElementById('submitBtn');
+        const label = document.getElementById('submitLabel');
+        const originalLabel = label.textContent;
+        btn.disabled = true;
+        label.innerHTML = `<span class="spinner"></span>${currentLang === 'vi' ? 'Đang xử lý…' : 'Processing…'}`;
+
+        try {
+            const res = await fetch('/api/book', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name, email, phone, sid, referralCode: ref,
+                    seats: selectedSeats.map(s => s.id),
+                }),
+            });
+            const data = await res.json().catch(() => ({}));
+
+            if (res.status === 409) {
+                if (Array.isArray(data.conflicts)) {
+                    data.conflicts.forEach(id => soldSeats.add(id));
+                    applySoldSeats();
+                }
+                toast(currentLang === 'vi'
+                    ? 'Rất tiếc, một ghế bạn chọn vừa được đặt. Vui lòng chọn lại.'
+                    : 'Sorry — one of your seats was just taken. Please choose again.', 'error');
+                showSection('seats');
+                return;
+            }
+            if (!res.ok) {
+                toast(data.error || 'Booking failed. Please try again.', 'error');
+                return;
+            }
+
+            // Success.
+            document.getElementById('confName').textContent = name;
+            document.getElementById('confSeats').textContent =
+                data.seats.map(s => `F${s.floor}·${s.row}${s.num} (${s.tier})`).join(',  ');
+            toast(currentLang === 'vi' ? 'Đặt chỗ thành công! Email đã được gửi.' : 'Booking confirmed! Check your email.', 'success');
+            // Mark the seats we just booked as sold, but clear our local
+            // selection FIRST so applySoldSeats() doesn't mistake our own
+            // booking for someone else's and fire the conflict toast.
+            data.seats.forEach(s => soldSeats.add(s.seat_id));
+            selectedSeats = [];
+            document.querySelectorAll('.seat.selected').forEach(el => el.classList.remove('selected'));
+            applySoldSeats();
+            updateUI();
+            showSection('confirmation');
+        } catch (err) {
+            toast(currentLang === 'vi' ? 'Lỗi mạng. Vui lòng thử lại.' : 'Network error. Please try again.', 'error');
+        } finally {
+            btn.disabled = false;
+            label.textContent = originalLabel;
+        }
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', submitBooking);
+
+    // =========================================================================
+    //  Init
+    // =========================================================================
+    buildMap();
+    setLang('en');
+    refreshSoldSeats();
+    // Poll every 15 s so the map stays fresh for concurrent viewers.
+    setInterval(refreshSoldSeats, 15000);
+    </script>
+</body>
+</html>

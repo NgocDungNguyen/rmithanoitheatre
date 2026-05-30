@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theat.R — Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cobalt-deep: #0b032d;
+            --gold: #f7dc8a;
+            --gold-bright: #fff1b6;
+            --cream: #fbf5e7;
+            --glass: rgba(32, 18, 83, 0.5);
+            --line: rgba(247, 220, 138, 0.22);
+            --vip: #8B0000;
+            --stars: #A385E0;
+            --artists: #8BA9E8;
+            --dreamers: #F8E58C;
+            --danger: #ef7878;
+            --success: #86d59a;
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+        }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--cobalt-deep);
+            background-image:
+                radial-gradient(circle at 15% 10%, rgba(163,133,224,0.18), transparent 45%),
+                radial-gradient(circle at 85% 30%, rgba(139,169,232,0.12), transparent 50%),
+                linear-gradient(180deg, #0b032d 0%, #12063d 50%, #070121 100%);
+            background-attachment: fixed;
+            color: var(--cream);
+            min-height: 100vh;
+        }
+        .panel { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(16px); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,.35); }
+        .pill { border: 1px solid var(--line); background: rgba(255,255,255,.06); color: var(--cream); padding: 6px 12px; border-radius: 999px; cursor: pointer; font-weight: 700; font-size: .78rem; transition: all .15s; }
+        .pill:hover { background: rgba(255,255,255,.14); }
+        .pill.active { background: var(--gold); color: var(--cobalt-deep); border-color: transparent; }
+        .pill.danger { border-color: rgba(239,120,120,.5); }
+        .pill.danger:hover { background: rgba(239,120,120,.14); border-color: rgba(239,120,120,.85); color: #ffd2d2; }
+        .pill.success { border-color: rgba(134,213,154,.55); color: #c6ebd2; }
+        .pill.success:hover { background: rgba(134,213,154,.15); border-color: rgba(134,213,154,.9); }
+        .pill.gold { background: var(--gold); color: var(--cobalt-deep); border-color: transparent; }
+        .pill.gold:hover { background: var(--gold-bright); }
+        .btn-primary {
+            background: linear-gradient(135deg, #fff1b6, #f7dc8a);
+            color: var(--cobalt-deep); font-weight: 800;
+            border-radius: 999px; padding: 12px 24px;
+            transition: transform .2s, box-shadow .2s, filter .2s;
+            box-shadow: 0 6px 24px rgba(247,220,138,.25);
+        }
+        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 10px 32px rgba(247,220,138,.45); }
+        .btn-primary:disabled { opacity: .45; cursor: not-allowed; }
+        input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--line);
+            padding: 11px 14px; border-radius: 12px;
+            color: white; width: 100%; outline: none;
+            transition: border-color .15s, background .15s;
+        }
+        input:focus { border-color: var(--gold); background: rgba(255,255,255,.08); }
+        input::placeholder { color: rgba(251,245,231,.35); }
+
+        .stat-card { background: rgba(255,255,255,.04); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+        .stat-label { font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(251,245,231,.55); font-weight: 700; }
+        .stat-value { font-family: var(--font-display); font-weight: 900; font-size: 1.8rem; color: var(--gold-bright); margin-top: 2px; }
+
+        /* Bigger, more readable tier pills */
+        .tier-pill {
+            display: inline-flex; align-items: center;
+            font-size: .9rem; font-weight: 900;
+            padding: 5px 14px; border-radius: 999px;
+            text-transform: uppercase; letter-spacing: .06em;
+        }
+        .tier-pill.sm { font-size: .65rem; padding: 2px 8px; letter-spacing: .08em; }
+        .tier-Stars    { background: linear-gradient(135deg,#b99af0,#8a6bd4); color: #0b032d; }
+        .tier-Artists  { background: linear-gradient(135deg,#a7c1ef,#6b8fd8); color: #0b032d; }
+        .tier-Dreamers { background: linear-gradient(135deg,#fbeca3,#eacf6a); color: #3a2a00; }
+
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: .7rem; font-weight: 800;
+            padding: 4px 10px; border-radius: 999px;
+            text-transform: uppercase; letter-spacing: .06em;
+        }
+        .status-paid   { background: rgba(134,213,154,.18); color: #c6ebd2; border: 1px solid rgba(134,213,154,.55); }
+        .status-unpaid { background: rgba(239,180,80,.14);  color: #ffd9a0; border: 1px solid rgba(239,180,80,.55); }
+
+        .seat-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 3px 6px 3px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(247,220,138,.18);
+            font-family: var(--font-mono);
+            font-size: .75rem;
+        }
+        .seat-chip .x {
+            width: 18px; height: 18px; display: grid; place-items: center;
+            border-radius: 999px; background: rgba(239,120,120,.15);
+            color: #ffd2d2; font-weight: 700; cursor: pointer; margin-left: 2px;
+            border: 1px solid rgba(239,120,120,.4);
+            transition: all .15s;
+        }
+        .seat-chip .x:hover { background: rgba(239,120,120,.4); color: #fff; }
+
+        table.bookings-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        table.bookings-table th {
+            font-size: .65rem; letter-spacing: .12em; text-transform: uppercase;
+            color: rgba(251,245,231,.55); font-weight: 700;
+            padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left;
+        }
+        table.bookings-table td { padding: 14px 12px; border-bottom: 1px solid rgba(247,220,138,.08); vertical-align: top; }
+        table.bookings-table tr:hover td { background: rgba(255,255,255,.02); }
+
+        .toast-wrap {
+            position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+            z-index: 2000; display: flex; flex-direction: column; gap: 8px;
+            max-width: 92vw; width: 420px; pointer-events: none;
+        }
+        .toast {
+            background: rgba(11,3,45,.95); border: 1px solid var(--line);
+            color: var(--cream); padding: 12px 16px; border-radius: 14px;
+            font-size: .9rem; font-weight: 500;
+            box-shadow: 0 10px 40px rgba(0,0,0,.5);
+            animation: toastIn .2s ease;
+            pointer-events: auto;
+        }
+        .toast.success { border-color: rgba(134,213,154,.55); }
+        .toast.error   { border-color: rgba(239,120,120,.55); }
+        @keyframes toastIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .spinner { width: 14px; height: 14px; border-radius: 999px; border: 2px solid rgba(251,245,231,.3); border-top-color: var(--cobalt-deep); animation: spin .7s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .hidden { display: none !important; }
+        .muted { color: rgba(251,245,231,.55); }
+        .mono  { font-family: var(--font-mono); font-size: .8rem; }
+
+        /* ===== Seat map ===== */
+        .aisle { width: 32px; flex-shrink: 0; }
+        .seat-row { display: flex; gap: 2px; justify-content: center; margin-bottom: 3px; align-items: center; }
+        .rowlbl { width: 28px; text-align: center; font-weight: 800; color: var(--gold); font-size: .8rem; flex-shrink: 0; }
+        .stage-wrap { display: flex; justify-content: center; margin-bottom: 2rem; }
+        .stage-curve {
+            width: 75%; height: 72px;
+            border-bottom-left-radius: 50% 100%;
+            border-bottom-right-radius: 50% 100%;
+            border: 2px solid var(--gold); border-top: none;
+            background: radial-gradient(ellipse at top, rgba(247,220,138,.18), rgba(255,255,255,.02));
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 40px rgba(247,220,138,.1), inset 0 -20px 40px rgba(247,220,138,.08);
+        }
+        .floor-divider {
+            width: 100%; margin: 40px 0 24px;
+            border-top: 1px dashed rgba(247,220,138,.3);
+            position: relative; text-align: center;
+        }
+        .floor-divider span {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(180deg, #1a0a4a, #0b032d);
+            padding: 6px 20px;
+            font-family: var(--font-display); font-style: italic;
+            font-size: 1.2rem; color: var(--gold);
+            border-radius: 999px; border: 1px solid var(--line);
+        }
+        .map-shell { position: relative; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+        .map-shell::-webkit-scrollbar { height: 8px; }
+        .map-shell::-webkit-scrollbar-track { background: rgba(255,255,255,.04); border-radius: 999px; }
+        .map-shell::-webkit-scrollbar-thumb { background: rgba(247,220,138,.35); border-radius: 999px; }
+        .map-viewport { min-width: max-content; margin: 0 auto; }
+
+        .seat {
+            transition: transform .15s, filter .15s, box-shadow .15s;
+            cursor: pointer; user-select: none;
+            font-size: 0.65rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(0,0,0,0.18);
+            border-radius: 5px;
+            position: relative;
+            width: 28px; height: 28px;
+        }
+        .seat:hover { transform: translateY(-2px) scale(1.1); filter: brightness(1.15); box-shadow: 0 4px 12px rgba(0,0,0,.4); z-index: 5; }
+        .vip-bg      { background: linear-gradient(135deg, #a10808, #6b0000); color: #fff1b6; }
+        .stars-bg    { background: linear-gradient(135deg, #b99af0, #8a6bd4); color: #0b032d; }
+        .artists-bg  { background: linear-gradient(135deg, #a7c1ef, #6b8fd8); color: #0b032d; }
+        .dreamers-bg { background: linear-gradient(135deg, #fbeca3, #eacf6a); color: #3a2a00; }
+        .seat.vip { cursor: not-allowed; }
+        .seat.booked {
+            background: linear-gradient(135deg, #b84545, #7a2222) !important;
+            color: #ffd6d6 !important;
+            border-color: rgba(0,0,0,.3);
+        }
+        .seat.booked.unpaid {
+            background: linear-gradient(135deg, #d89840, #a06420) !important;
+            color: #fff3d6 !important;
+        }
+        .seat.locked {
+            background: repeating-linear-gradient(45deg, #222 0 4px, #111 4px 8px) !important;
+            color: #888 !important;
+            border: 1px solid rgba(247,220,138,.3);
+        }
+
+        /* Seat popover */
+        #seatPopover {
+            position: fixed; z-index: 1500;
+            background: rgba(11,3,45,.98);
+            border: 1px solid var(--gold);
+            border-radius: 14px;
+            padding: 14px;
+            min-width: 240px; max-width: 340px;
+            box-shadow: 0 16px 50px rgba(0,0,0,.6);
+            animation: toastIn .15s ease;
+        }
+
+        /* Map legend */
+        .map-legend { display: flex; flex-wrap: wrap; gap: 10px 16px; font-size: .78rem; }
+        .legend-dot { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(0,0,0,.2); vertical-align: middle; margin-right: 6px; }
+
+        @media (max-width: 720px) {
+            table.bookings-table thead { display: none; }
+            table.bookings-table tr { display: block; margin-bottom: 12px; border: 1px solid var(--line); border-radius: 14px; padding: 6px; background: rgba(255,255,255,.02); }
+            table.bookings-table td { display: block; padding: 8px 10px; border: none; }
+            table.bookings-table td::before { content: attr(data-label); display: block; font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; color: rgba(251,245,231,.45); margin-bottom: 4px; }
+            .seat { width: 22px; height: 22px; font-size: 0.55rem; }
+            .rowlbl { width: 22px; font-size: .7rem; }
+            .aisle { width: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <header class="flex items-center justify-between px-6 py-4 border-b border-[color:var(--line)] bg-[rgba(11,3,45,.9)] sticky top-0 z-40 backdrop-blur">
+        <div class="flex items-center gap-4">
+            <a href="/" class="font-[family-name:var(--font-display)] font-black text-xl uppercase tracking-wider" style="color: var(--gold)">RMIT Theatre</a>
+            <span class="text-xs uppercase tracking-[0.25em] opacity-50">Admin</span>
+        </div>
+        <div id="headerActions" class="flex items-center gap-3">
+            <span id="whoami" class="text-xs opacity-70"></span>
+            <button id="refreshBtn" class="pill hidden" title="Refresh">↻ Refresh</button>
+            <button id="logoutBtn" class="pill hidden">Sign out</button>
+        </div>
+    </header>
+
+    <!-- ========== LOGIN ========== -->
+    <section id="loginView" class="max-w-md mx-auto px-6 py-20">
+        <div class="panel p-8">
+            <h1 class="text-3xl font-[family-name:var(--font-display)] font-black mb-2" style="color: var(--gold-bright)">Admin sign-in</h1>
+            <p class="text-sm opacity-70 mb-6">Restricted area — staff only.</p>
+            <form id="loginForm" class="space-y-4" autocomplete="off">
+                <div>
+                    <label class="block text-[10px] uppercase tracking-widest mb-2" style="color: var(--gold)">Username</label>
+                    <input type="text" id="username" autocomplete="username" value="admin" required>
+                </div>
+                <div>
+                    <label class="block text-[10px] uppercase tracking-widest mb-2" style="color: var(--gold)">Password</label>
+                    <input type="password" id="password" autocomplete="current-password" required>
+                </div>
+                <button type="submit" id="loginBtn" class="btn-primary w-full mt-2">
+                    <span id="loginLabel">Sign in</span>
+                </button>
+                <p id="loginHint" class="text-xs opacity-60 italic"></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- ========== DASHBOARD ========== -->
+    <section id="dashView" class="hidden max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6">
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+            <div class="stat-card"><div class="stat-label">Bookings</div><div class="stat-value" id="statBookings">–</div></div>
+            <div class="stat-card"><div class="stat-label">Seats sold</div><div class="stat-value" id="statSeats">–</div></div>
+            <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-value mono" id="statRevenue" style="font-family: var(--font-mono); font-size: 1.4rem;">–</div></div>
+            <div class="stat-card">
+                <div class="stat-label">By tier</div>
+                <div class="flex flex-wrap gap-1.5 mt-2" id="statByTier"></div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex items-center gap-2 border-b border-[color:var(--line)] pb-2">
+            <button class="pill tab-btn active" data-tab="bookings">Bookings</button>
+            <button class="pill tab-btn" data-tab="map">Seat Map</button>
+        </div>
+
+        <!-- ===== Bookings tab ===== -->
+        <div id="tab-bookings" class="tab-pane space-y-6">
+            <div class="flex flex-wrap items-center gap-3">
+                <input id="filterInput" type="text" placeholder="Search name, email, phone, seat (e.g. F1-D-14)…" class="max-w-md" style="flex: 1 1 240px">
+                <div class="flex gap-2">
+                    <button class="pill pay-filter active" data-pay="all">All</button>
+                    <button class="pill pay-filter" data-pay="unpaid">Unpaid</button>
+                    <button class="pill pay-filter" data-pay="paid">Paid</button>
+                </div>
+                <span class="text-xs opacity-60 ml-auto"><span id="filterCount">0</span> shown</span>
+            </div>
+
+            <div class="panel p-3 sm:p-4 overflow-x-auto">
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th style="width:60px">ID</th>
+                            <th>Guest</th>
+                            <th>Seats</th>
+                            <th style="width:130px">Total / Status</th>
+                            <th style="width:170px">Booked at</th>
+                            <th style="width:180px" class="text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsBody">
+                        <tr><td colspan="6" class="text-center opacity-60 py-10">Loading…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===== Seat Map tab ===== -->
+        <div id="tab-map" class="tab-pane hidden space-y-4">
+            <div class="panel p-4 sm:p-5 space-y-3">
+                <div class="flex flex-wrap justify-between items-start gap-3">
+                    <div>
+                        <h2 class="text-lg font-bold" style="color: var(--gold-bright)">Live seat map</h2>
+                        <p class="text-xs opacity-60">Click an available seat to lock it. Click a booked/locked seat to inspect or release it.</p>
+                    </div>
+                    <button id="reloadMapBtn" class="pill">↻ Reload</button>
+                </div>
+                <div class="map-legend">
+                    <span><span class="legend-dot stars-bg"></span>Stars (available)</span>
+                    <span><span class="legend-dot artists-bg"></span>Artists (available)</span>
+                    <span><span class="legend-dot dreamers-bg"></span>Dreamers (available)</span>
+                    <span><span class="legend-dot vip-bg"></span>VIP (guest-only)</span>
+                    <span><span class="legend-dot" style="background:linear-gradient(135deg, #b84545, #7a2222)"></span>Booked · paid</span>
+                    <span><span class="legend-dot" style="background:linear-gradient(135deg, #d89840, #a06420)"></span>Booked · unpaid</span>
+                    <span><span class="legend-dot" style="background:repeating-linear-gradient(45deg, #222 0 4px, #111 4px 8px)"></span>Admin lock</span>
+                </div>
+            </div>
+
+            <div class="stage-wrap">
+                <div class="stage-curve">
+                    <h1 class="text-2xl font-bold uppercase tracking-[0.2em]" style="color: var(--dreamers)">stage / sân khấu</h1>
+                </div>
+            </div>
+
+            <div id="seatMapShell" class="panel p-4 map-shell">
+                <div id="mapViewport" class="map-viewport">
+                    <div id="floor1-map" class="flex flex-col gap-1"></div>
+                    <div class="floor-divider"><span>tầng 2 / second floor</span></div>
+                    <div id="floor2-map" class="flex flex-col gap-1"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating seat popover -->
+    <div id="seatPopover" class="hidden"></div>
+
+    <script>
+    // ============================================================
+    //  Seat-map spec — keep in sync with club.html
+    // ============================================================
+    const MAP_FLOOR_1 = [
+        { row: 'A', tier: 'VIP',     left: { count: 12, start: 24 }, right: { count: 12, start: 12 } },
+        { row: 'B', tier: 'VIP',     left: { count: 12, start: 24 }, right: { count: 12, start: 12 } },
+        { row: 'C', tier: 'Stars',   left: { count: 12, start: 24 }, right: { count: 12, start: 12 } },
+        { row: 'D', tier: 'Stars',   left: { count: 13, start: 26 }, right: { count: 13, start: 13 } },
+        { row: 'E', tier: 'Stars',   left: { count: 13, start: 26 }, right: { count: 13, start: 13 } },
+        { row: 'F', tier: 'Stars',   left: { count: 13, start: 26 }, right: { count: 13, start: 13 } },
+        { row: 'G', tier: 'Artists', left: { count: 13, start: 26 }, right: { count: 13, start: 13 } },
+        { row: 'H', tier: 'Artists', left: { count: 13, start: 26 }, right: { count: 13, start: 13 } },
+        { row: 'J', tier: 'Artists', left: { count: 13, start: 26 }, right: { count: 13, start: 13 } },
+        { row: 'K', tier: 'Artists', left: { count: 14, start: 28 }, right: { count: 14, start: 14 } },
+        { row: 'L', tier: 'Artists', left: { count: 14, start: 28 }, right: { count: 14, start: 14 } },
+        { row: 'M', tier: 'Artists', left: { count: 14, start: 28 }, right: { count: 14, start: 14 } },
+        { row: 'N', tier: 'Artists', single: { count: 24, start: 24 } },
+    ];
+    const MAP_FLOOR_2 = [
+        { row: 'A', tier: 'Artists',  left: { count: 15, start: 30 }, right: { count: 15, start: 15 } },
+        { row: 'B', tier: 'Artists',  left: { count: 15, start: 30 }, right: { count: 15, start: 15 } },
+        { row: 'C', tier: 'Artists',  left: { count: 15, start: 30 }, right: { count: 15, start: 15 } },
+        { row: 'D', tier: 'Dreamers', left: { count: 12, start: 24 }, right: { count: 12, start: 12 } },
+        { row: 'E', tier: 'Dreamers', single: { count: 24, start: 24 } },
+    ];
+
+
+    // ============================================================
+    //  State & helpers
+    // ============================================================
+    let allBookings = [];
+    let seatMeta = {};          // from /api/admin/map
+    let filterText = '';
+    let payFilter  = 'all';
+    let mapBuilt   = false;
+
+    const $ = (id) => document.getElementById(id);
+
+    function toast(msg, type = '') {
+        const el = document.createElement('div');
+        el.className = `toast ${type}`;
+        el.textContent = msg;
+        $('toastWrap').appendChild(el);
+        setTimeout(() => { el.style.opacity = '0'; el.style.transform = 'translateY(-8px)'; setTimeout(() => el.remove(), 250); }, 3500);
+    }
+    function fmtVND(n) { return (n || 0).toLocaleString('vi-VN') + '₫'; }
+    function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    function fmtDate(iso) {
+        if (!iso) return '-';
+        const d = new Date(iso.includes('T') ? iso : iso.replace(' ', 'T') + 'Z');
+        if (isNaN(d)) return iso;
+        return d.toLocaleString();
+    }
+    const seatId = (f, r, n) => `F${f}-${r}-${n}`;
+
+    // ============================================================
+    //  Auth
+    // ============================================================
+    async function checkAuth() {
+        try {
+            const r = await fetch('/api/admin/me', { credentials: 'same-origin' });
+            if (r.status === 503) {
+                $('loginView').innerHTML = `<div class="panel p-8 text-center">
+                    <h1 class="text-2xl font-bold mb-2" style="color: var(--gold-bright)">Admin panel disabled</h1>
+                    <p class="opacity-70 text-sm">Set <code class="mono">ADMIN_PASSWORD</code> in <code class="mono">.env</code> and restart the server to enable it.</p>
+                </div>`;
+                return;
+            }
+            const data = await r.json();
+            if (data.authenticated) enterDashboard(data.username);
+            else showLogin();
+        } catch { showLogin(); }
+    }
+    function showLogin() {
+        $('loginView').classList.remove('hidden');
+        $('dashView').classList.add('hidden');
+        $('logoutBtn').classList.add('hidden');
+        $('refreshBtn').classList.add('hidden');
+        $('whoami').textContent = '';
+    }
+    async function enterDashboard(username) {
+        $('loginView').classList.add('hidden');
+        $('dashView').classList.remove('hidden');
+        $('logoutBtn').classList.remove('hidden');
+        $('refreshBtn').classList.remove('hidden');
+        $('whoami').textContent = `Signed in as ${username}`;
+        await loadAll();
+    }
+
+    $('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = $('loginBtn');
+        const label = $('loginLabel');
+        btn.disabled = true;
+        label.innerHTML = `<span class="spinner"></span>Signing in…`;
+        try {
+            const res = await fetch('/api/admin/login', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: $('username').value, password: $('password').value }),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                toast(data.error || 'Login failed', 'error');
+                $('loginHint').textContent = res.status === 429 ? 'Too many attempts — wait a few minutes.' : '';
+                return;
+            }
+            toast('Signed in', 'success');
+            $('password').value = '';
+            enterDashboard(data.username);
+        } catch { toast('Network error', 'error'); }
+        finally { btn.disabled = false; label.textContent = 'Sign in'; }
+    });
+
+    $('logoutBtn').addEventListener('click', async () => {
+        await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' });
+        toast('Signed out');
+        showLogin();
+    });
+    $('refreshBtn').addEventListener('click', () => loadAll());
+
+    // ============================================================
+    //  Tabs
+    // ============================================================
+    document.querySelectorAll('.tab-btn').forEach(b => b.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(x => x.classList.toggle('active', x === b));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+        $('tab-' + b.dataset.tab).classList.remove('hidden');
+        if (b.dataset.tab === 'map' && !mapBuilt) buildSeatMap();
+        if (b.dataset.tab === 'map') renderSeatMapState();
+    }));
+    $('reloadMapBtn').addEventListener('click', () => loadAll());
+
+    // ============================================================
+    //  Data loading
+    // ============================================================
+    async function loadAll() {
+        await Promise.all([loadBookings(), loadMap()]);
+    }
+
+    async function loadBookings() {
+        $('bookingsBody').innerHTML = '<tr><td colspan="6" class="text-center opacity-60 py-10">Loading…</td></tr>';
+        try {
+            const res = await fetch('/api/admin/bookings', { credentials: 'same-origin', cache: 'no-store' });
+            if (res.status === 401) { showLogin(); return; }
+            const data = await res.json();
+            if (!res.ok) { toast(data.error || 'Failed to load', 'error'); return; }
+            allBookings = data.bookings;
+            renderStats(data.stats);
+            renderBookings();
+        } catch { toast('Network error', 'error'); }
+    }
+
+    async function loadMap() {
+        try {
+            const res = await fetch('/api/admin/map', { credentials: 'same-origin', cache: 'no-store' });
+            if (res.status === 401) return;
+            const data = await res.json();
+            if (!res.ok) return;
+            seatMeta = data.seats || {};
+            if (mapBuilt) renderSeatMapState();
+        } catch {}
+    }
+
+    function renderStats(s) {
+        $('statBookings').textContent = s.totalBookings;
+        $('statSeats').textContent = s.totalSeats;
+        $('statRevenue').textContent = fmtVND(s.totalRevenue);
+        const tier = $('statByTier');
+        tier.innerHTML = '';
+        for (const t of ['Stars', 'Artists', 'Dreamers']) {
+            const n = s.byTier[t] || 0;
+            tier.insertAdjacentHTML('beforeend', `<span class="tier-pill tier-${t}">${t} · ${n}</span>`);
+        }
+    }
+
+    // ============================================================
+    //  Bookings table
+    // ============================================================
+    function matchesFilter(b) {
+        if (payFilter === 'paid'   && !b.paid) return false;
+        if (payFilter === 'unpaid' &&  b.paid) return false;
+        if (!filterText) return true;
+        const q = filterText.toLowerCase();
+        if (String(b.id).includes(q)) return true;
+        if ((b.name||'').toLowerCase().includes(q)) return true;
+        if ((b.email||'').toLowerCase().includes(q)) return true;
+        if ((b.phone||'').toLowerCase().includes(q)) return true;
+        if ((b.sid||'').toLowerCase().includes(q)) return true;
+        if ((b.referral_code||'').toLowerCase().includes(q)) return true;
+        return b.seats.some(s => s.seat_id.toLowerCase().includes(q));
+    }
+
+    function renderBookings() {
+        const body = $('bookingsBody');
+        const rows = allBookings.filter(matchesFilter);
+        $('filterCount').textContent = rows.length;
+        if (rows.length === 0) {
+            body.innerHTML = `<tr><td colspan="6" class="text-center opacity-60 py-10">${allBookings.length === 0 ? 'No bookings yet.' : 'No matches.'}</td></tr>`;
+            return;
+        }
+        body.innerHTML = rows.map(b => {
+            const seatHtml = b.seats.map(s => `
+                <span class="seat-chip">
+                    <span class="tier-pill sm tier-${s.tier}">${s.tier.slice(0,1)}</span>
+                    <span>F${s.floor}·${esc(s.row)}${s.num}</span>
+                    <span class="x" title="Cancel this seat" data-cancel-seat="${esc(s.seat_id)}" data-booking-id="${b.id}">×</span>
+                </span>`).join(' ');
+
+            const metaLines = [
+                `<div class="mono text-xs opacity-80">${esc(b.email)}</div>`,
+                `<div class="mono text-xs opacity-80">${esc(b.phone)}</div>`,
+                b.sid ? `<div class="text-xs opacity-70">sID: <span class="mono">${esc(b.sid)}</span></div>` : '',
+                b.referral_code ? `<div class="text-xs opacity-70">Ref: <span class="mono">${esc(b.referral_code)}</span></div>` : '',
+            ].filter(Boolean).join('');
+
+            const discountLine = b.discount ? `<div class="text-[10px] opacity-60">sub ${fmtVND(b.subtotal)} · -${fmtVND(b.discount)}</div>` : '';
+
+            const statusBadge = b.paid
+                ? `<span class="status-badge status-paid">✓ Paid</span>`
+                : `<span class="status-badge status-unpaid">● Unpaid</span>`;
+
+            const payBtn = b.paid
+                ? '' // button disappears once paid
+                : `<button class="pill success" data-mark-paid="${b.id}">Mark as Paid</button>`;
+
+            return `
+                <tr data-booking-row="${b.id}">
+                    <td data-label="ID"><span class="mono text-sm opacity-80">#${b.id}</span></td>
+                    <td data-label="Guest">
+                        <div class="font-bold">${esc(b.name)}</div>
+                        ${metaLines}
+                    </td>
+                    <td data-label="Seats"><div class="flex flex-wrap gap-1.5">${seatHtml}</div></td>
+                    <td data-label="Total / Status">
+                        <div class="font-bold mono mb-1" style="color: var(--gold-bright)">${fmtVND(b.total)}</div>
+                        ${discountLine}
+                        <div class="mt-2">${statusBadge}</div>
+                    </td>
+                    <td data-label="Booked at"><span class="mono text-xs opacity-80">${fmtDate(b.created_at)}</span></td>
+                    <td data-label="Actions" class="text-right">
+                        <div class="flex flex-wrap gap-2 justify-end">
+                            ${payBtn}
+                            <button class="pill danger" data-cancel-booking="${b.id}" title="Cancel entire booking">Cancel</button>
+                        </div>
+                    </td>
+                </tr>`;
+        }).join('');
+
+        body.querySelectorAll('[data-cancel-seat]').forEach(el => {
+            el.addEventListener('click', () => cancelSeat(el.dataset.cancelSeat));
+        });
+        body.querySelectorAll('[data-cancel-booking]').forEach(el => {
+            el.addEventListener('click', () => cancelBooking(Number(el.dataset.cancelBooking)));
+        });
+        body.querySelectorAll('[data-mark-paid]').forEach(el => {
+            el.addEventListener('click', () => markPaid(Number(el.dataset.markPaid)));
+        });
+    }
+
+    async function cancelSeat(seatId_) {
+        if (!confirm(`Cancel seat ${seatId_}? This frees it for someone else.`)) return;
+        try {
+            const res = await fetch('/api/admin/seats/' + encodeURIComponent(seatId_), {
+                method: 'DELETE', credentials: 'same-origin',
+            });
+            if (res.status === 401) { showLogin(); return; }
+            const data = await res.json();
+            if (!res.ok) { toast(data.error || 'Failed', 'error'); return; }
+            toast(data.removedBooking ? `Seat ${seatId_} cancelled (booking removed).` : `Seat ${seatId_} cancelled.`, 'success');
+            loadAll();
+        } catch { toast('Network error', 'error'); }
+    }
+
+    async function cancelBooking(id) {
+        const b = allBookings.find(x => x.id === id);
+        const n = b ? b.seats.length : 0;
+        if (!confirm(`Cancel booking #${id}${b ? ` (${b.name}, ${n} seat${n !== 1 ? 's' : ''})` : ''}? This frees ALL its seats.`)) return;
+        try {
+            const res = await fetch('/api/admin/bookings/' + id, { method: 'DELETE', credentials: 'same-origin' });
+            if (res.status === 401) { showLogin(); return; }
+            const data = await res.json();
+            if (!res.ok) { toast(data.error || 'Failed', 'error'); return; }
+            toast(`Booking #${id} cancelled.`, 'success');
+            loadAll();
+        } catch { toast('Network error', 'error'); }
+    }
+
+    async function markPaid(id) {
+        try {
+            const res = await fetch(`/api/admin/bookings/${id}/paid`, {
+                method: 'POST', credentials: 'same-origin',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ paid: true }),
+            });
+            if (res.status === 401) { showLogin(); return; }
+            const data = await res.json();
+            if (!res.ok) { toast(data.error || 'Failed', 'error'); return; }
+            toast(`Booking #${id} marked as paid.`, 'success');
+            loadAll();
+        } catch { toast('Network error', 'error'); }
+    }
+
+    $('filterInput').addEventListener('input', (e) => { filterText = e.target.value.trim(); renderBookings(); });
+    document.querySelectorAll('.pay-filter').forEach(b => b.addEventListener('click', () => {
+        document.querySelectorAll('.pay-filter').forEach(x => x.classList.toggle('active', x === b));
+        payFilter = b.dataset.pay;
+        renderBookings();
+    }));
+
+    // ============================================================
+    //  Seat map
+    // ============================================================
+    function buildSeat(floor, row, num, tier) {
+        const el = document.createElement('div');
+        const id = seatId(floor, row, num);
+        el.className = `seat ${tier.toLowerCase()}-bg`;
+        el.dataset.id = id;
+        el.dataset.floor = floor; el.dataset.row = row; el.dataset.num = num; el.dataset.tier = tier;
+        el.innerText = num;
+        if (tier === 'VIP') el.classList.add('vip');
+        el.addEventListener('click', (e) => openSeatPopover(e, id));
+        return el;
+    }
+
+    function buildRow(spec, floor, container) {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'seat-row';
+        const lbl = document.createElement('div'); lbl.className = 'rowlbl'; lbl.innerText = spec.row;
+        rowDiv.appendChild(lbl);
+        if (spec.single) {
+            const strip = document.createElement('div'); strip.className = 'flex gap-0.5';
+            for (let i = spec.single.start; i >= spec.single.start - spec.single.count + 1; i--) {
+                strip.appendChild(buildSeat(floor, spec.row, i, spec.tier));
+            }
+            rowDiv.appendChild(strip);
+        } else {
+            const left = document.createElement('div'); left.className = 'flex gap-0.5';
+            for (let i = spec.left.start; i > spec.left.start - spec.left.count; i--) left.appendChild(buildSeat(floor, spec.row, i, spec.tier));
+            rowDiv.appendChild(left);
+            const aisle = document.createElement('div'); aisle.className = 'aisle'; rowDiv.appendChild(aisle);
+            const right = document.createElement('div'); right.className = 'flex gap-0.5';
+            for (let i = spec.right.start; i >= spec.right.start - spec.right.count + 1; i--) right.appendChild(buildSeat(floor, spec.row, i, spec.tier));
+            rowDiv.appendChild(right);
+        }
+        rowDiv.appendChild(lbl.cloneNode(true));
+        container.appendChild(rowDiv);
+    }
+
+    function buildSeatMap() {
+        const f1 = $('floor1-map'); const f2 = $('floor2-map');
+        f1.innerHTML = ''; f2.innerHTML = '';
+        MAP_FLOOR_1.forEach(s => buildRow(s, 1, f1));
+        MAP_FLOOR_2.forEach(s => buildRow(s, 2, f2));
+        mapBuilt = true;
+        renderSeatMapState();
+    }
+
+    function renderSeatMapState() {
+        document.querySelectorAll('#mapViewport .seat').forEach(el => {
+            const id = el.dataset.id;
+            el.classList.remove('booked', 'locked', 'unpaid');
+            const meta = seatMeta[id];
+            if (!meta) return;
+            if (meta.status === 'locked') el.classList.add('locked');
+            else if (meta.status === 'booked') {
+                el.classList.add('booked');
+                if (!meta.paid) el.classList.add('unpaid');
+            }
+        });
+    }
+
+    // ---- Seat popover --------------------------------------------------------
+    const pop = $('seatPopover');
+    document.addEventListener('click', (e) => {
+        if (!pop.classList.contains('hidden') && !pop.contains(e.target) && !e.target.classList.contains('seat')) {
+            pop.classList.add('hidden');
+        }
+    });
+
+    function positionPopover(clientX, clientY) {
+        pop.style.visibility = 'hidden';
+        pop.classList.remove('hidden');
+        const w = pop.offsetWidth;
+        const h = pop.offsetHeight;
+        const pad = 10;
+        let x = clientX + 12;
+        let y = clientY + 12;
+        if (x + w + pad > window.innerWidth)  x = clientX - w - 12;
+        if (y + h + pad > window.innerHeight) y = clientY - h - 12;
+        pop.style.left = Math.max(pad, x) + 'px';
+        pop.style.top  = Math.max(pad, y) + 'px';
+        pop.style.visibility = 'visible';
+    }
+
+    function openSeatPopover(evt, id) {
+        evt.stopPropagation();
+        const meta = seatMeta[id];
+        const el = evt.currentTarget;
+        const tier = el.dataset.tier;
+
+        let body;
+        if (tier === 'VIP') {
+            body = `<div class="font-bold mb-1">${id} · VIP</div>
+                    <p class="text-xs opacity-70">VIP seats are never bookable — reserved for guests of the club.</p>`;
+        } else if (!meta) {
+            // Available
+            body = `
+                <div class="font-bold mb-1">${id}</div>
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="tier-pill sm tier-${tier}">${tier}</span>
+                    <span class="text-xs opacity-70">Available</span>
+                </div>
+                <p class="text-xs opacity-70 mb-3">Lock this seat so guests can't book it (e.g. reserved for staff or technical hold).</p>
+                <div class="flex gap-2">
+                    <button class="pill gold" id="popLockBtn">Lock seat</button>
+                    <button class="pill" id="popCloseBtn">Cancel</button>
+                </div>`;
+        } else if (meta.status === 'locked') {
+            body = `
+                <div class="font-bold mb-1">${id}</div>
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="tier-pill sm tier-${tier}">${tier}</span>
+                    <span class="text-xs opacity-70">Locked by admin</span>
+                </div>
+                <p class="text-xs opacity-70 mb-3">This seat has been held by an admin. Unlock to make it available to guests again.</p>
+                <div class="flex gap-2">
+                    <button class="pill success" id="popUnlockBtn">Unlock</button>
+                    <button class="pill" id="popCloseBtn">Cancel</button>
+                </div>`;
+        } else {
+            // Booked
+            const statusHtml = meta.paid
+                ? `<span class="status-badge status-paid">✓ Paid</span>`
+                : `<span class="status-badge status-unpaid">● Unpaid</span>`;
+            body = `
+                <div class="font-bold mb-1">${id}</div>
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="tier-pill sm tier-${tier}">${tier}</span>
+                    ${statusHtml}
+                </div>
+                <div class="text-sm mb-1"><strong>${esc(meta.guestName || '—')}</strong></div>
+                <div class="text-xs opacity-70 mb-3">Booking #${meta.bookingId}</div>
+                <div class="flex gap-2 flex-wrap">
+                    <button class="pill" id="popViewBtn">View in list</button>
+                    <button class="pill danger" id="popCancelBtn">Release seat</button>
+                </div>`;
+        }
+        pop.innerHTML = body;
+        positionPopover(evt.clientX, evt.clientY);
+
+        pop.querySelector('#popCloseBtn')?.addEventListener('click', () => pop.classList.add('hidden'));
+        pop.querySelector('#popLockBtn')?.addEventListener('click', () => lockSeat(id));
+        pop.querySelector('#popUnlockBtn')?.addEventListener('click', () => unlockSeat(id));
+        pop.querySelector('#popCancelBtn')?.addEventListener('click', () => cancelSeatFromMap(id));
+        pop.querySelector('#popViewBtn')?.addEventListener('click', () => {
+            pop.classList.add('hidden');
+            document.querySelector('.tab-btn[data-tab="bookings"]').click();
+            filterText = id; $('filterInput').value = id; renderBookings();
+        });
+    }
+
+    async function lockSeat(id) {
+        pop.classList.add('hidden');
+        try {
+            const res = await fetch(`/api/admin/seats/${encodeURIComponent(id)}/lock`, {
+                method: 'POST', credentials: 'same-origin',
+            });
+            const data = await res.json();
+            if (!res.ok) { toast(data.error || 'Failed', 'error'); return; }
+            toast(`${id} locked.`, 'success');
+            loadAll();
+        } catch { toast('Network error', 'error'); }
+    }
+
+    async function unlockSeat(id) {
+        pop.classList.add('hidden');
+        try {
+            const res = await fetch(`/api/admin/seats/${encodeURIComponent(id)}`, {
+                method: 'DELETE', credentials: 'same-origin',
+            });
+            const data = await res.json();
+            if (!res.ok) { toast(data.error || 'Failed', 'error'); return; }
+            toast(`${id} unlocked.`, 'success');
+            loadAll();
+        } catch { toast('Network error', 'error'); }
+    }
+
+    async function cancelSeatFromMap(id) {
+        pop.classList.add('hidden');
+        if (!confirm(`Release seat ${id} from this guest's booking?`)) return;
+        cancelSeat(id);
+    }
+
+    // Kick things off
+    checkAuth();
+    // Background refresh so the map stays live for multiple admins.
+    setInterval(() => { if (!$('dashView').classList.contains('hidden')) loadMap(); }, 10000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+# -----------------------------------------------------------------------------
+# Nginx reverse-proxy for rmithanoitheatre.shop
+#
+#   1. sudo cp deploy/nginx.conf.example /etc/nginx/sites-available/theatre
+#   2. sudo ln -sf /etc/nginx/sites-available/theatre /etc/nginx/sites-enabled/
+#   3. sudo nginx -t && sudo systemctl reload nginx
+#   4. sudo certbot --nginx -d rmithanoitheatre.shop -d www.rmithanoitheatre.shop
+#
+# Certbot rewrites this file on first run to add the HTTPS block and the
+# HTTP→HTTPS redirect. The commented HTTPS block below shows the end state.
+# -----------------------------------------------------------------------------
+
+# HTTP. Certbot will transform this block into a 301-to-HTTPS redirect after
+# provisioning the cert.
+server {
+    listen 80;
+    listen [::]:80;
+    server_name rmithanoitheatre.shop www.rmithanoitheatre.shop;
+
+    # Let's Encrypt ACME HTTP-01 challenge path (Certbot needs this).
+    location /.well-known/acme-challenge/ {
+        root /var/www/html;
+    }
+
+    # Reverse-proxy to Node for everything else. Certbot replaces this with a
+    # permanent redirect to HTTPS once TLS is live.
+    location / {
+        proxy_pass         http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host  $host;
+    }
+}
+
+# HTTPS. This is roughly the block Certbot will add for you — shown here so
+# you know what the final file looks like. You can uncomment + edit manually
+# if you're terminating TLS yourself (e.g. Cloudflare origin cert).
+#
+# server {
+#     listen 443 ssl http2;
+#     listen [::]:443 ssl http2;
+#     server_name rmithanoitheatre.shop www.rmithanoitheatre.shop;
+#
+#     ssl_certificate     /etc/letsencrypt/live/rmithanoitheatre.shop/fullchain.pem;
+#     ssl_certificate_key /etc/letsencrypt/live/rmithanoitheatre.shop/privkey.pem;
+#     include /etc/letsencrypt/options-ssl-nginx.conf;
+#     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+#
+#     # HSTS — enable after you've confirmed HTTPS is stable for a few days.
+#     # add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+#
+#     add_header X-Frame-Options        "SAMEORIGIN" always;
+#     add_header X-Content-Type-Options "nosniff"    always;
+#     add_header Referrer-Policy        "strict-origin-when-cross-origin" always;
+#
+#     client_max_body_size 128k;
+#
+#     gzip             on;
+#     gzip_vary        on;
+#     gzip_min_length  1024;
+#     gzip_types       text/plain text/css application/json application/javascript text/xml application/xml text/javascript;
+#
+#     location / {
+#         proxy_pass         http://127.0.0.1:3000;
+#         proxy_http_version 1.1;
+#
+#         proxy_set_header Host              $host;
+#         proxy_set_header X-Real-IP         $remote_addr;
+#         proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+#         proxy_set_header X-Forwarded-Proto $scheme;
+#         proxy_set_header X-Forwarded-Host  $host;
+#
+#         proxy_connect_timeout 10s;
+#         proxy_send_timeout    30s;
+#         proxy_read_timeout    30s;
+#     }
+# }

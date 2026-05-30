@@ -1,0 +1,33 @@
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# Runtime state — never commit
+theatre.db
+theatre.db-wal
+theatre.db-shm
+*.db.smoke-bak
+test-*.db
+test-*.db-wal
+test-*.db-shm
+
+# Logs (PM2 writes here when using ecosystem.config.js)
+logs/
+*.log
+
+# macOS noise
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Editors
+.vscode/
+.idea/
+*.swp
